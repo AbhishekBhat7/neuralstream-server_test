@@ -13,6 +13,11 @@ app.use(
   "/api",
   authRoutes
 );
+app.get("/", (req, res) => {
+  res.send(
+    "Welcome to the NeuralStream API"
+  );
+});
 
 app.listen(
   process.env.PORT || 3000,
