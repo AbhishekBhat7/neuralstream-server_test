@@ -5,12 +5,12 @@ Auth Table creation :
 CREATE TABLE users (
     user_id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL, 
+    password_hash TEXT NOT NULL,
     account_status VARCHAR(20) DEFAULT 'active'
         CHECK (account_status IN ('active', 'suspended', 'deleted')),
     last_login_at TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 Devices table:
@@ -28,9 +28,9 @@ CREATE TABLE user_devices (
     browser VARCHAR(100),
 
     ip_address INET,
-    last_active_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_active_at TIMESTAMPTZ DEFAULT NOW(),
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
 
     UNIQUE(user_id, device_fingerprint)
 );
@@ -50,11 +50,11 @@ CREATE TABLE refresh_tokens (
 
     token_hash TEXT NOT NULL,
 
-    expires_at TIMESTAMP NOT NULL,
+    expires_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
 
     revoked BOOLEAN DEFAULT FALSE,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 *******************************  MOBILE USERS SCHEMA ENDS ************************************************

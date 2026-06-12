@@ -1,0 +1,29 @@
+name: Deploy to A2 Hosting
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to A2 Hosting
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.A2_SSH_HOST }}
+          username: ${{ secrets.A2_SSH_USERNAME }}
+          key: ${{ secrets.A2_SSH_PRIVATE_KEY }}
+          port: ${{ secrets.A2_SSH_PORT }}
+          script: |
+            cd /home/rosettes/neuralstream.server
+            git pull origin main
+            source /home/rosettes/nodevenv/neuralstream.server/20/bin/activate
+            npm install
+            mkdir -p /home/rosettes/tmp
+            touch /home/rosettes/tmp/restart.txt
