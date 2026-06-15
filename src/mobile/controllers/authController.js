@@ -230,26 +230,41 @@ const logoutController =
 
     try {
 
+      // const {
+      //   userId,
+      //   deviceId
+      // } = req.body;
       const {
-        userId,
-        deviceId
-      } = req.body;
+  userId,
+  deviceFingerprint
+} = req.body;
+
+      // if (
+      //   !userId ||
+      //   !deviceId
+      // ) {
+      //   return res.status(400).json({
+      //     success: false,
+      //     message:
+      //       "userId and deviceId are required",
+      //   });
+      // }
 
       if (
-        !userId ||
-        !deviceId
-      ) {
-        return res.status(400).json({
-          success: false,
-          message:
-            "userId and deviceId are required",
-        });
-      }
+  !userId ||
+  !deviceFingerprint
+) {
+  return res.status(400).json({
+    success: false,
+    message:
+      "userId and deviceFingerprint are required",
+  });
+}
 
       await authService.logout(
-        userId,
-        deviceId
-      );
+  userId,
+  deviceFingerprint
+);
 
       return res.status(200).json({
         success: true,

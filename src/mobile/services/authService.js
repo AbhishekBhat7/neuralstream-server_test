@@ -276,10 +276,58 @@ const login = async (
 /**
  * LOGOUT SINGLE DEVICE
  */
+// const logout = async (
+//   userId,
+//   deviceId
+// ) => {
+
+//   await pool.query(
+//     `
+//     UPDATE refresh_tokens
+//     SET revoked = TRUE
+//     WHERE user_id = $1
+//     AND device_id = $2
+//     AND revoked = FALSE
+//     `,
+//     [
+//       userId,
+//       deviceId,
+//     ]
+//   );
+
+//   return true;
+// };
+
+
 const logout = async (
   userId,
-  deviceId
+  deviceFingerprint
 ) => {
+
+  const deviceResult =
+    await pool.query(
+      `
+      SELECT device_id
+      FROM user_devices
+      WHERE user_id = $1
+      AND device_fingerprint = $2
+      `,
+      [
+        userId,
+        deviceFingerprint
+      ]
+    );
+
+  if (
+    deviceResult.rows.length === 0
+  ) {
+    throw new Error(
+      "Device not found"
+    );
+  }
+
+  const deviceId =
+    deviceResult.rows[0].device_id;
 
   await pool.query(
     `
@@ -291,7 +339,7 @@ const logout = async (
     `,
     [
       userId,
-      deviceId,
+      deviceId
     ]
   );
 
