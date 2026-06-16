@@ -5,10 +5,11 @@ Auth Table creation :
 CREATE TABLE users (
     user_id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    password_hash TEXT,
+    firebase_uid VARCHAR(255) UNIQUE,
     account_status VARCHAR(20) DEFAULT 'active'
         CHECK (account_status IN ('active', 'suspended', 'deleted')),
-    last_login_at TIMESTAMP,
+    last_login_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );

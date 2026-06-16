@@ -6,6 +6,7 @@ const {
   loginController,
   logoutController,
   logoutAllDevicesController,
+  firebaseAuthController
 } = require(
   "../controllers/authController"
 );
@@ -28,6 +29,11 @@ router.post(
 router.post(
   "/auth/logout-all",
   logoutAllDevicesController
+);
+
+router.post(
+  "/auth/firebase",
+  firebaseAuthController
 );
 
 module.exports = router;

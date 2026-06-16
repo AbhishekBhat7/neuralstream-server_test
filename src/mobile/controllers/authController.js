@@ -322,9 +322,59 @@ const logoutAllDevicesController =
     }
 };
 
+const firebaseAuthController =
+async (req, res) => {
+
+  try {
+
+    const {
+      email,
+      firebase_uid
+    } = req.body;
+
+    const fingerprint =
+      req.headers[
+        "device-fingerprint"
+      ];
+
+    if (!fingerprint) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Device fingerprint required"
+      });
+    }
+
+    const deviceInfo =
+      getDeviceInfo(req);
+
+    const result =
+      await authService.firebaseAuth(
+        email,
+        firebase_uid,
+        fingerprint,
+        deviceInfo
+      );
+
+    return res.status(200).json({
+      success: true,
+      data: result
+    });
+
+  } catch (err) {
+
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    });
+
+  }
+};
+
 module.exports = {
   signupController,
   loginController,
   logoutController,
   logoutAllDevicesController,
+  firebaseAuthController
 };

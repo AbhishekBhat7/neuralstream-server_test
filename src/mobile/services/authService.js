@@ -9,6 +9,169 @@ const {
   generateRefreshToken,
 } = require("../utils/authJwt");
 
+
+const createUserSession = async (
+  user,
+  fingerprint,
+  deviceInfo
+) => {
+
+  // Find device
+  let deviceResult = await pool.query(
+    `
+    SELECT *
+    FROM user_devices
+    WHERE user_id = $1
+    AND device_fingerprint = $2
+    `,
+    [
+      user.user_id,
+      fingerprint
+    ]
+  );
+
+  let device = deviceResult.rows[0];
+
+  /**
+   * New Device
+   */
+  if (!device) {
+
+    const activeDevices =
+      await pool.query(
+        `
+        SELECT COUNT(DISTINCT device_id)::INT AS count
+        FROM refresh_tokens
+        WHERE user_id = $1
+        AND revoked = FALSE
+        AND expires_at > NOW()
+        `,
+        [user.user_id]
+      );
+
+    if (
+      activeDevices.rows[0].count >= 3
+    ) {
+      throw new Error(
+        "Maximum 3 devices allowed"
+      );
+    }
+
+    const newDevice =
+      await pool.query(
+        `
+        INSERT INTO user_devices
+        (
+          user_id,
+          device_fingerprint,
+          device_name,
+          platform,
+          browser,
+          ip_address
+        )
+        VALUES
+        (
+          $1,$2,$3,$4,$5,$6
+        )
+        RETURNING *
+        `,
+        [
+          user.user_id,
+          fingerprint,
+          deviceInfo.device_name,
+          deviceInfo.platform,
+          deviceInfo.browser,
+          deviceInfo.ip_address
+        ]
+      );
+
+    device = newDevice.rows[0];
+  }
+
+  // Update device activity
+  await pool.query(
+    `
+    UPDATE user_devices
+    SET
+      last_active_at = NOW(),
+      ip_address = $1
+    WHERE device_id = $2
+    `,
+    [
+      deviceInfo.ip_address,
+      device.device_id
+    ]
+  );
+
+  // Revoke old tokens for this device
+  await pool.query(
+    `
+    UPDATE refresh_tokens
+    SET revoked = TRUE
+    WHERE user_id = $1
+    AND device_id = $2
+    AND revoked = FALSE
+    `,
+    [
+      user.user_id,
+      device.device_id
+    ]
+  );
+
+  const refreshToken =
+    generateRefreshToken();
+
+  const tokenHash = crypto
+    .createHash("sha256")
+    .update(refreshToken)
+    .digest("hex");
+
+  const expiresAt = new Date(
+    Date.now() +
+    30 * 24 * 60 * 60 * 1000
+  );
+
+  await pool.query(
+    `
+    INSERT INTO refresh_tokens
+    (
+      user_id,
+      device_id,
+      token_hash,
+      expires_at
+    )
+    VALUES
+    (
+      $1,$2,$3,$4
+    )
+    `,
+    [
+      user.user_id,
+      device.device_id,
+      tokenHash,
+      expiresAt
+    ]
+  );
+
+  await pool.query(
+    `
+    UPDATE users
+    SET last_login_at = NOW()
+    WHERE user_id = $1
+    `,
+    [user.user_id]
+  );
+
+  return {
+    accessToken:
+      generateAccessToken(user),
+    refreshToken,
+    deviceId:
+      device.device_id
+  };
+};
+
+
 /**
  * SIGNUP
  */
@@ -104,173 +267,179 @@ const login = async (
     throw new Error("Invalid credentials");
   }
 
-  // Find existing device
-  let deviceResult = await pool.query(
-    `
-    SELECT *
-    FROM user_devices
-    WHERE user_id = $1
-    AND device_fingerprint = $2
-    `,
-    [
-      user.user_id,
-      fingerprint,
-    ]
-  );
+  // // Find existing device
+  // let deviceResult = await pool.query(
+  //   `
+  //   SELECT *
+  //   FROM user_devices
+  //   WHERE user_id = $1
+  //   AND device_fingerprint = $2
+  //   `,
+  //   [
+  //     user.user_id,
+  //     fingerprint,
+  //   ]
+  // );
 
-  let device = deviceResult.rows[0];
+  // let device = deviceResult.rows[0];
 
-  /**
-   * New Device
-   * Enforce max 3 ACTIVE devices
-   */
-  if (!device) {
+  // /**
+  //  * New Device
+  //  * Enforce max 3 ACTIVE devices
+  //  */
+  // if (!device) {
 
-    const activeDevices =
-      await pool.query(
-        `
-        SELECT COUNT(DISTINCT device_id)::INT AS count
-        FROM refresh_tokens
-        WHERE user_id = $1
-        AND revoked = FALSE
-        AND expires_at > NOW()
-        `,
-        [user.user_id]
-      );
+  //   const activeDevices =
+  //     await pool.query(
+  //       `
+  //       SELECT COUNT(DISTINCT device_id)::INT AS count
+  //       FROM refresh_tokens
+  //       WHERE user_id = $1
+  //       AND revoked = FALSE
+  //       AND expires_at > NOW()
+  //       `,
+  //       [user.user_id]
+  //     );
 
-    if (
-      activeDevices.rows[0].count >= 3
-    ) {
-      throw new Error(
-        "Maximum 3 devices allowed"
-      );
-    }
+  //   if (
+  //     activeDevices.rows[0].count >= 3
+  //   ) {
+  //     throw new Error(
+  //       "Maximum 3 devices allowed"
+  //     );
+  //   }
 
-    const newDevice =
-      await pool.query(
-        `
-        INSERT INTO user_devices
-        (
-          user_id,
-          device_fingerprint,
-          device_name,
-          platform,
-          browser,
-          ip_address
-        )
-        VALUES
-        (
-          $1,$2,$3,$4,$5,$6
-        )
-        RETURNING *
-        `,
-        [
-          user.user_id,
-          fingerprint,
-          deviceInfo.device_name,
-          deviceInfo.platform,
-          deviceInfo.browser,
-          deviceInfo.ip_address,
-        ]
-      );
+  //   const newDevice =
+  //     await pool.query(
+  //       `
+  //       INSERT INTO user_devices
+  //       (
+  //         user_id,
+  //         device_fingerprint,
+  //         device_name,
+  //         platform,
+  //         browser,
+  //         ip_address
+  //       )
+  //       VALUES
+  //       (
+  //         $1,$2,$3,$4,$5,$6
+  //       )
+  //       RETURNING *
+  //       `,
+  //       [
+  //         user.user_id,
+  //         fingerprint,
+  //         deviceInfo.device_name,
+  //         deviceInfo.platform,
+  //         deviceInfo.browser,
+  //         deviceInfo.ip_address,
+  //       ]
+  //     );
 
-    device = newDevice.rows[0];
-  }
+  //   device = newDevice.rows[0];
+  // }
 
-  /**
-   * Existing Device
-   * Update last activity
-   */
-  await pool.query(
-    `
-    UPDATE user_devices
-    SET
-      last_active_at = NOW(),
-      ip_address = $1
-    WHERE device_id = $2
-    `,
-    [
-      deviceInfo.ip_address,
-      device.device_id,
-    ]
-  );
+  // /**
+  //  * Existing Device
+  //  * Update last activity
+  //  */
+  // await pool.query(
+  //   `
+  //   UPDATE user_devices
+  //   SET
+  //     last_active_at = NOW(),
+  //     ip_address = $1
+  //   WHERE device_id = $2
+  //   `,
+  //   [
+  //     deviceInfo.ip_address,
+  //     device.device_id,
+  //   ]
+  // );
 
-  /**
-   * Revoke any existing active token
-   * for this device
-   */
-  await pool.query(
-    `
-    UPDATE refresh_tokens
-    SET revoked = TRUE
-    WHERE user_id = $1
-    AND device_id = $2
-    AND revoked = FALSE
-    `,
-    [
-      user.user_id,
-      device.device_id,
-    ]
-  );
+  // /**
+  //  * Revoke any existing active token
+  //  * for this device
+  //  */
+  // await pool.query(
+  //   `
+  //   UPDATE refresh_tokens
+  //   SET revoked = TRUE
+  //   WHERE user_id = $1
+  //   AND device_id = $2
+  //   AND revoked = FALSE
+  //   `,
+  //   [
+  //     user.user_id,
+  //     device.device_id,
+  //   ]
+  // );
 
-  /**
-   * Create new refresh token
-   */
-  const refreshToken =
-    generateRefreshToken();
+  // /**
+  //  * Create new refresh token
+  //  */
+  // const refreshToken =
+  //   generateRefreshToken();
 
-  const tokenHash = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
+  // const tokenHash = crypto
+  //   .createHash("sha256")
+  //   .update(refreshToken)
+  //   .digest("hex");
 
-  const expiresAt =
-    new Date(
-      Date.now() +
-      30 * 24 * 60 * 60 * 1000
-    );
+  // const expiresAt =
+  //   new Date(
+  //     Date.now() +
+  //     30 * 24 * 60 * 60 * 1000
+  //   );
 
-  await pool.query(
-    `
-    INSERT INTO refresh_tokens
-    (
-      user_id,
-      device_id,
-      token_hash,
-      expires_at
-    )
-    VALUES
-    (
-      $1,$2,$3,$4
-    )
-    `,
-    [
-      user.user_id,
-      device.device_id,
-      tokenHash,
-      expiresAt,
-    ]
-  );
+  // await pool.query(
+  //   `
+  //   INSERT INTO refresh_tokens
+  //   (
+  //     user_id,
+  //     device_id,
+  //     token_hash,
+  //     expires_at
+  //   )
+  //   VALUES
+  //   (
+  //     $1,$2,$3,$4
+  //   )
+  //   `,
+  //   [
+  //     user.user_id,
+  //     device.device_id,
+  //     tokenHash,
+  //     expiresAt,
+  //   ]
+  // );
 
-  /**
-   * Update login timestamp
-   */
-  await pool.query(
-    `
-    UPDATE users
-    SET last_login_at = NOW()
-    WHERE user_id = $1
-    `,
-    [user.user_id]
-  );
+  // /**
+  //  * Update login timestamp
+  //  */
+  // await pool.query(
+  //   `
+  //   UPDATE users
+  //   SET last_login_at = NOW()
+  //   WHERE user_id = $1
+  //   `,
+  //   [user.user_id]
+  // );
 
-  return {
-    accessToken:
-      generateAccessToken(user),
-    refreshToken,
-    deviceId:
-      device.device_id,
-  };
+  // return {
+  //   accessToken:
+  //     generateAccessToken(user),
+  //   refreshToken,
+  //   deviceId:
+  //     device.device_id,
+  // };
+
+  return await createUserSession(
+  user,
+  fingerprint,
+  deviceInfo
+);
 };
 
 /**
@@ -381,10 +550,99 @@ const cleanupExpiredTokens =
     return true;
 };
 
+
+const firebaseAuth = async (
+  email,
+  firebaseUid,
+  fingerprint,
+  deviceInfo
+) => {
+
+  let userResult =
+    await pool.query(
+      `
+      SELECT *
+      FROM users
+      WHERE email = $1
+      `,
+      [email]
+    );
+
+  let user;
+
+  if (
+    userResult.rows.length === 0
+  ) {
+
+    const newUser =
+      await pool.query(
+        `
+        INSERT INTO users
+        (
+          email,
+          firebase_uid
+        )
+        VALUES
+        (
+          $1,
+          $2
+        )
+        RETURNING *
+        `,
+        [
+          email,
+          firebaseUid
+        ]
+      );
+
+    user = newUser.rows[0];
+
+  } else {
+
+    user = userResult.rows[0];
+
+    if (
+      user.firebase_uid &&
+      user.firebase_uid !== firebaseUid
+    ) {
+      throw new Error(
+        "Firebase UID mismatch"
+      );
+    }
+
+    if (
+      !user.firebase_uid
+    ) {
+
+      await pool.query(
+        `
+        UPDATE users
+        SET firebase_uid = $1
+        WHERE user_id = $2
+        `,
+        [
+          firebaseUid,
+          user.user_id
+        ]
+      );
+
+      user.firebase_uid =
+        firebaseUid;
+    }
+  }
+
+  return await createUserSession(
+    user,
+    fingerprint,
+    deviceInfo
+  );
+};
+
 module.exports = {
   signup,
   login,
   logout,
+  firebaseAuth ,
   logoutAllDevices,
   cleanupExpiredTokens,
 };
