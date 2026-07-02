@@ -371,10 +371,61 @@ async (req, res) => {
   }
 };
 
+const refreshTokenController = async (req, res) => {
+
+    try {
+
+        const { refreshToken } = req.body;
+
+        if (!refreshToken) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Refresh token is required"
+            });
+
+        }
+
+        const result =
+            await authService.refreshAccessToken(
+                refreshToken
+            );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Token refreshed",
+
+            data: result
+
+        });
+
+    } catch (err) {
+
+        return res.status(401).json({
+
+            success: false,
+
+            message: err.message
+
+        });
+
+    }
+
+};
 module.exports = {
-  signupController,
-  loginController,
-  logoutController,
-  logoutAllDevicesController,
-  firebaseAuthController
+
+    signupController,
+
+    loginController,
+
+    logoutController,
+
+    logoutAllDevicesController,
+
+    firebaseAuthController,
+
+    refreshTokenController
+
 };

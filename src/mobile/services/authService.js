@@ -1,14 +1,21 @@
 // const argon2 = require("argon2");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
+const bcrypt = require("bcrypt");
 const pool = require("../../config/db");
 
-const {
-  generateAccessToken,
-  generateRefreshToken,
-} = require("../utils/authJwt");
+// const {
+//   generateAccessToken,
+//   generateRefreshToken,
+// } = require("../utils/authJwt");
 
+const {
+    generateAccessToken,
+    generateRefreshToken,
+    hashRefreshToken,
+    REFRESH_TOKEN_VALIDITY_DAYS
+} = require("../utils/authJwt");
 
 const createUserSession = async (
   user,
@@ -162,13 +169,23 @@ const createUserSession = async (
     [user.user_id]
   );
 
+  // return {
+  //   accessToken:
+  //     generateAccessToken(user),
+  //   refreshToken,
+  //   deviceId:
+  //     device.device_id
+  // };
   return {
     accessToken:
-      generateAccessToken(user),
+        generateAccessToken(
+            user,
+            device.device_id
+        ),
     refreshToken,
     deviceId:
-      device.device_id
-  };
+        device.device_id
+};
 };
 
 
@@ -638,11 +655,252 @@ const firebaseAuth = async (
   );
 };
 
+const refreshAccessToken = async (
+    refreshToken
+) => {
+
+    const tokenHash =
+        hashRefreshToken(
+            refreshToken
+        );
+
+    await pool.query("BEGIN");
+
+    try {
+
+        //-----------------------------------
+        // Find Refresh Token
+        //-----------------------------------
+
+        const tokenResult =
+            await pool.query(
+                `
+                SELECT
+                    *
+                FROM
+                    refresh_tokens
+                WHERE
+                    token_hash = $1
+                FOR UPDATE
+                `,
+                [
+                    tokenHash
+                ]
+            );
+            console.log("Token Result:", tokenResult.rows);
+            console.log("Token Hash:", tokenHash);
+        if (
+            tokenResult.rows.length === 0
+        ) {
+
+            throw new Error(
+                "Invalid refresh token"
+            );
+
+        }
+
+        const token =
+            tokenResult.rows[0];
+
+        //-----------------------------------
+        // Check Revoked
+        //-----------------------------------
+
+        if (
+            token.revoked
+        ) {
+
+            throw new Error(
+                "Refresh token revoked"
+            );
+
+        }
+
+        //-----------------------------------
+        // Check Expiry
+        //-----------------------------------
+
+        if (
+            new Date(
+                token.expires_at
+            ) < new Date()
+        ) {
+
+            throw new Error(
+                "Refresh token expired"
+            );
+
+        }
+
+        //-----------------------------------
+        // Load User
+        //-----------------------------------
+
+        const userResult =
+            await pool.query(
+                `
+                SELECT *
+                FROM users
+                WHERE user_id=$1
+                `,
+                [
+                    token.user_id
+                ]
+            );
+
+        if (
+            userResult.rows.length === 0
+        ) {
+
+            throw new Error(
+                "User not found"
+            );
+
+        }
+
+        const user =
+            userResult.rows[0];
+
+        //-----------------------------------
+        // Create New Tokens
+        //-----------------------------------
+
+        const newAccessToken =
+            generateAccessToken(
+                user,
+                token.device_id
+            );
+
+        const newRefreshToken =
+            generateRefreshToken();
+
+        const newHash =
+            hashRefreshToken(
+                newRefreshToken
+            );
+
+        const expiresAt =
+            new Date(
+
+                Date.now()
+
+                +
+
+                REFRESH_TOKEN_VALIDITY_DAYS
+
+                *
+
+                24
+
+                *
+
+                60
+
+                *
+
+                60
+
+                *
+
+                1000
+
+            );
+
+        //-----------------------------------
+        // Revoke Old Token
+        //-----------------------------------
+
+       await pool.query(
+`
+UPDATE refresh_tokens
+SET
+    revoked = TRUE
+WHERE token_id = $1
+`,
+[
+    token.token_id
+]
+);  
+
+        //-----------------------------------
+        // Insert New Token
+        //-----------------------------------
+
+        await pool.query(
+            `
+            INSERT INTO refresh_tokens
+            (
+                user_id,
+
+                device_id,
+
+                token_hash,
+
+                expires_at
+            )
+            VALUES
+            (
+                $1,
+                $2,
+                $3,
+                $4
+            )
+            `,
+            [
+
+                token.user_id,
+
+                token.device_id,
+
+                newHash,
+
+                expiresAt
+
+            ]
+        );
+
+        await pool.query(
+            "COMMIT"
+        );
+
+        return {
+
+            accessToken:
+                newAccessToken,
+
+            refreshToken:
+                newRefreshToken,
+
+            deviceId:
+                token.device_id
+
+        };
+
+    } catch (err) {
+
+        await pool.query(
+            "ROLLBACK"
+        );
+
+        throw err;
+
+    }
+
+};
 module.exports = {
-  signup,
-  login,
-  logout,
-  firebaseAuth ,
-  logoutAllDevices,
-  cleanupExpiredTokens,
+
+    signup,
+
+    login,
+
+    logout,
+
+    logoutAllDevices,
+
+    firebaseAuth,
+
+    cleanupExpiredTokens,
+
+    refreshAccessToken
+
 };

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NeuroStream · Live Viewer</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:#0d1117; color:#e6edf3;
+  font-family:'Courier New',monospace;
+  min-height:100vh;
+}
+header {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 20px;
+  background:#161b22;
+  border-bottom:1px solid #30363d;
+  position:sticky; top:0; z-index:10;
+}
+header h1 { font-size:15px; font-weight:700; letter-spacing:1px; }
+#dot {
+  width:10px; height:10px; border-radius:50%;
+  background:#f85149; flex-shrink:0;
+  transition:background .3s;
+}
+#dot.live { background:#3fb950; animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+#stats { font-size:11px; color:#8b949e; margin-left:auto; white-space:nowrap; }
+
+#container { padding:16px; display:flex; flex-direction:column; gap:14px; }
+
+.card {
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:10px;
+  padding:14px 16px;
+}
+.card h2 {
+  font-size:10px; letter-spacing:0.8px;
+  color:#8b949e; margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+/* Channel toggle grid */
+#ch-toggles {
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:4px; margin-bottom:10px;
+}
+.ch-btn {
+  font-size:10px; font-family:'Courier New',monospace;
+  padding:4px 2px; border-radius:4px; cursor:pointer;
+  border:1.5px solid; background:transparent;
+  transition:all .15s; text-align:center;
+}
+.ch-btn.off { opacity:.25; }
+
+canvas { width:100%!important; }
+
+#events-list { max-height:150px; overflow-y:auto; }
+.ev {
+  font-size:11px; padding:4px 0;
+  border-bottom:1px solid #21262d;
+  display:flex; gap:10px;
+}
+.ev-time { color:#58a6ff; min-width:56px; }
+.ev-name { color:#3fb950; }
+.ev-detail { color:#8b949e; flex:1; overflow:hidden;
+             text-overflow:ellipsis; white-space:nowrap; }
+
+#offline-banner {
+  display:none;
+  background:#f85149; color:#fff;
+  text-align:center; padding:10px;
+  font-size:13px; font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div id="offline-banner">⚠️  Host disconnected — waiting for reconnect...</div>
+
+<header>
+  <div id="dot"></div>
+  <h1>NEUROSTREAM · LIVE VIEWER</h1>
+  <span id="stats">Connecting...</span>
+</header>
+
+<div id="container">
+
+  <!-- EEG card -->
+  <div class="card">
+    <h2>Real-Time EEG · 16 channels · 250 Hz</h2>
+    <div id="ch-toggles"></div>
+    <canvas id="eeg" height="220"></canvas>
+  </div>
+
+  <!-- fNIRS card -->
+  <div class="card">
+    <h2>fNIRS Hemodynamics &nbsp;
+      <span style="color:#f85149">■ HbO</span>
+      &nbsp;
+      <span style="color:#58a6ff">■ HbR</span>
+    </h2>
+    <canvas id="fnirs" height="120"></canvas>
+  </div>
+
+  <!-- Events card -->
+  <div class="card">
+    <h2>Event Markers</h2>
+    <div id="events-list">
+      <span style="color:#8b949e;font-size:11px">No events yet</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Config ───────────────────────────────────────────────────────
+const SESSION_ID = location.pathname.split('/').pop();
+const SERVER_URL = location.origin;   // same origin as the page
+const MAX_PTS    = 500;
+
+const EEG_COLORS = [
+  '#006064','#3949AB','#2E7D32','#EF6C00',
+  '#C62828','#6A1B9A','#00838F','#AD1457',
+  '#1565C0','#558B2F','#E65100','#4527A0',
+  '#00695C','#BF360C','#546E7A','#37474F',
+];
+
+// ── State ────────────────────────────────────────────────────────
+let labels   = [];
+let eegData  = Array.from({length:16}, ()=>[]);
+let hboData  = [];
+let hbrData  = [];
+let visible  = Array(16).fill(true);
+let frameCount  = 0;
+let startTs     = null;
+
+// ── Charts ───────────────────────────────────────────────────────
+const baseOpts = {
+  animation:false, responsive:true,
+  plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+  elements:{ point:{radius:0} },
+  scales:{
+    x:{ ticks:{color:'#8b949e',font:{size:9},maxTicksLimit:8},
+        grid:{color:'#21262d'} },
+    y:{ ticks:{color:'#8b949e',font:{size:9}},
+        grid:{color:'#21262d'} },
+  },
+};
+
+const eegChart = new Chart(
+  document.getElementById('eeg').getContext('2d'), {
+  type:'line',
+  data:{
+    labels,
+    datasets: EEG_COLORS.map((c,i)=>({
+      label:'CH'+(i+1), data:eegData[i],
+      borderColor:c, borderWidth:1.4, fill:false,
+    })),
+  },
+  options:{...baseOpts},
+});
+
+const fnirsChart = new Chart(
+  document.getElementById('fnirs').getContext('2d'), {
+  type:'line',
+  data:{
+    labels,
+    datasets:[
+      {label:'HbO', data:hboData, borderColor:'#f85149',
+       borderWidth:2, fill:false},
+      {label:'HbR', data:hbrData, borderColor:'#58a6ff',
+       borderWidth:2, fill:false},
+    ],
+  },
+  options:{
+    ...baseOpts,
+    plugins:{
+      ...baseOpts.plugins,
+      legend:{display:true, labels:{color:'#e6edf3',font:{size:11}}},
+    },
+  },
+});
+
+// ── Channel toggle buttons ────────────────────────────────────────
+const grid = document.getElementById('ch-toggles');
+EEG_COLORS.forEach((c,i)=>{
+  const b = document.createElement('button');
+  b.className = 'ch-btn';
+  b.textContent = 'CH'+(i+1);
+  b.style.color = c;
+  b.style.borderColor = c;
+  b.onclick = ()=>{
+    visible[i] = !visible[i];
+    b.classList.toggle('off', !visible[i]);
+    eegChart.data.datasets[i].hidden = !visible[i];
+    eegChart.update('none');
+  };
+  grid.appendChild(b);
+});
+
+// ── Helpers ───────────────────────────────────────────────────────
+function fmtTime(ms){
+  if(startTs===null) return '--:--';
+  const e = Math.max(0, ms-startTs);
+  const s = Math.floor(e/1000);
+  return String(Math.floor(s/60)).padStart(2,'0')+':'+
+         String(s%60).padStart(2,'0');
+}
+
+function trim(){
+  while(labels.length>MAX_PTS) labels.shift();
+  eegData.forEach(a=>{ while(a.length>MAX_PTS) a.shift(); });
+  while(hboData.length>MAX_PTS) hboData.shift();
+  while(hbrData.length>MAX_PTS) hbrData.shift();
+}
+
+function applyFrame(f){
+  if(startTs===null) startTs = f.ts;
+  frameCount++;
+  labels.push(fmtTime(f.ts));
+  for(let i=0;i<16;i++) eegData[i].push(f.ch[i]);
+  hboData.push(f.ch[16]);
+  hbrData.push(f.ch[17]);
+  trim();
+  // Redraw every 8 frames (~30 fps)
+  if(frameCount%8===0){
+    eegChart.update('none');
+    fnirsChart.update('none');
+    document.getElementById('stats').textContent =
+      frameCount+' frames · '+fmtTime(f.ts);
+  }
+}
+
+function addEvent(e){
+  const list = document.getElementById('events-list');
+  const span = list.querySelector('span');
+  if(span) list.innerHTML='';
+  const d = document.createElement('div');
+  d.className='ev';
+  d.innerHTML=
+    `<span class="ev-time">${fmtTime(e.ts)}</span>`+
+    `<span class="ev-name">${e.name}</span>`+
+    `<span class="ev-detail">${e.details||''}</span>`;
+  list.prepend(d);
+}
+
+// ── Socket.IO ─────────────────────────────────────────────────────
+const socket = io(SERVER_URL+'/view', { transports:['websocket'] });
+const dot    = document.getElementById('dot');
+const banner = document.getElementById('offline-banner');
+
+socket.on('connect', ()=>{
+  dot.classList.add('live');
+  document.getElementById('stats').textContent='Joining session...';
+
+  // Join the session room
+  socket.emit('join', { sessionId: SESSION_ID });
+});
+
+socket.on('meta', (m)=>{
+  document.getElementById('stats').textContent =
+    m.channels+'ch · '+m.sampleRate+' Hz · LIVE';
+});
+
+// Replay buffered frames when we join late
+socket.on('replay', (frames)=>{
+  frames.forEach(applyFrame);
+  eegChart.update('none');
+  fnirsChart.update('none');
+});
+
+socket.on('frame',  applyFrame);
+socket.on('event',  addEvent);
+
+socket.on('host_disconnected', ()=>{
+  dot.classList.remove('live');
+  banner.style.display='block';
+  document.getElementById('stats').textContent='Host offline';
+});
+
+socket.on('error', (e)=>{
+  document.getElementById('stats').textContent = e.message;
+});
+
+socket.on('disconnect', ()=>{
+  dot.classList.remove('live');
+  document.getElementById('stats').textContent='Reconnecting...';
+});
+
+socket.on('reconnect', ()=>{
+  dot.classList.add('live');
+  socket.emit('join', { sessionId: SESSION_ID });
+});
+</script>
+</body>
+</html>

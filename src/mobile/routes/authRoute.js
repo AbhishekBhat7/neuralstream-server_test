@@ -2,14 +2,21 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  signupController,
-  loginController,
-  logoutController,
-  logoutAllDevicesController,
-  firebaseAuthController
-} = require(
-  "../controllers/authController"
-);
+
+    signupController,
+
+    loginController,
+
+    logoutController,
+
+    logoutAllDevicesController,
+
+    firebaseAuthController,
+
+    refreshTokenController
+
+} = require("../controllers/authController");
+
 
 router.post(
   "/auth/signup",
@@ -34,6 +41,11 @@ router.post(
 router.post(
   "/auth/firebase",
   firebaseAuthController
+);
+
+router.post(
+    "/auth/refresh",
+    refreshTokenController
 );
 
 module.exports = router;
