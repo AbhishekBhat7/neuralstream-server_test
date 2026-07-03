@@ -72,6 +72,46 @@
 
 
 
+// const { verifyToken } = require("../utils/authJwt");
+
+// const authenticateToken = (req, res, next) => {
+//     try {
+
+//         const authHeader = req.headers.authorization;
+
+//         if (!authHeader?.startsWith("Bearer ")) {
+//             return res.status(401).json({
+//                 success: false,
+//                 message: "Missing access token"
+//             });
+//         }
+
+//         const token = authHeader.split(" ")[1];
+
+//         req.user = verifyToken(token);
+
+//         next();
+
+//     } catch (err) {
+
+//         return res.status(401).json({
+//             success: false,
+//             message: "Invalid or expired token"
+//         });
+
+//     }
+// };
+
+// module.exports = authenticateToken;
+
+
+
+
+
+
+
+
+
 const { verifyToken } = require("../utils/authJwt");
 
 const authenticateToken = (req, res, next) => {
@@ -88,7 +128,17 @@ const authenticateToken = (req, res, next) => {
 
         const token = authHeader.split(" ")[1];
 
-        req.user = verifyToken(token);
+        const decoded = verifyToken(token);
+
+        // Extra safety check
+        if (!decoded) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid token"
+            });
+        }
+
+        req.user = decoded;
 
         next();
 
@@ -96,7 +146,10 @@ const authenticateToken = (req, res, next) => {
 
         return res.status(401).json({
             success: false,
-            message: "Invalid or expired token"
+            // Show specific JWT error in development
+            message: process.env.NODE_ENV === "development"
+                ? err.message
+                : "Invalid or expired token"
         });
 
     }

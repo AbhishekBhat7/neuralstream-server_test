@@ -76,35 +76,155 @@
 //   verifyToken
 // };
 
+// 
+// const jwt = require("jsonwebtoken");
+// const crypto = require("crypto");
+
+// /**
+//  * Access Token
+//  */
+// const ACCESS_TOKEN_EXPIRY =
+//     process.env.ACCESS_TOKEN_EXPIRY || "30m";
+
+// /**
+//  * Refresh Token Validity
+//  *
+//  * Used only while creating DB records.
+//  */
+// const REFRESH_TOKEN_VALIDITY_DAYS =
+//     parseInt(
+//         process.env.REFRESH_TOKEN_VALIDITY_DAYS || "60",
+//         10
+//     );
+
+// /**
+//  * Generate JWT Access Token
+//  */
+// const generateAccessToken = (
+//     user,
+//     deviceId
+// ) => {
+
+//     return jwt.sign(
+//         {
+//             userId: user.user_id,
+//             email: user.email,
+//             deviceId
+//         },
+//         process.env.JWT_SECRET,
+//         {
+//             expiresIn: ACCESS_TOKEN_EXPIRY
+//         }
+//     );
+
+// };
+
+// /**
+//  * Generate Secure Refresh Token
+//  */
+// const generateRefreshToken = () => {
+
+//     return crypto
+//         .randomBytes(64)
+//         .toString("hex");
+
+// };
+
+// /**
+//  * SHA256 Hash
+//  *
+//  * Refresh tokens are never stored
+//  * directly in the database.
+//  */
+// const hashRefreshToken = (
+//     refreshToken
+// ) => {
+
+//     return crypto
+//         .createHash("sha256")
+//         .update(refreshToken)
+//         .digest("hex");
+
+// };
+
+// /**
+//  * Verify JWT
+//  */
+// const verifyToken = (
+//     token
+// ) => {
+
+//     try {
+
+//         return jwt.verify(
+//             token,
+//             process.env.JWT_SECRET
+//         );
+
+//     } catch {
+
+//         return null;
+
+//     }
+
+// };
+
+// /**
+//  * Decode JWT
+//  *
+//  * Doesn't verify signature.
+//  * Useful only for debugging.
+//  */
+// const decodeToken = (
+//     token
+// ) => {
+
+//     return jwt.decode(token);
+
+// };
+
+// module.exports = {
+
+//     ACCESS_TOKEN_EXPIRY,
+
+//     REFRESH_TOKEN_VALIDITY_DAYS,
+
+//     generateAccessToken,
+
+//     generateRefreshToken,
+
+//     hashRefreshToken,
+
+//     verifyToken,
+
+//     decodeToken
+
+// };
+
+
+
+
+
+
+
+
+
+
+
 
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
-/**
- * Access Token
- */
 const ACCESS_TOKEN_EXPIRY =
     process.env.ACCESS_TOKEN_EXPIRY || "30m";
 
-/**
- * Refresh Token Validity
- *
- * Used only while creating DB records.
- */
 const REFRESH_TOKEN_VALIDITY_DAYS =
     parseInt(
         process.env.REFRESH_TOKEN_VALIDITY_DAYS || "60",
         10
     );
 
-/**
- * Generate JWT Access Token
- */
-const generateAccessToken = (
-    user,
-    deviceId
-) => {
-
+const generateAccessToken = (user, deviceId) => {
     return jwt.sign(
         {
             userId: user.user_id,
@@ -116,87 +236,40 @@ const generateAccessToken = (
             expiresIn: ACCESS_TOKEN_EXPIRY
         }
     );
-
 };
 
-/**
- * Generate Secure Refresh Token
- */
 const generateRefreshToken = () => {
-
     return crypto
         .randomBytes(64)
         .toString("hex");
-
 };
 
-/**
- * SHA256 Hash
- *
- * Refresh tokens are never stored
- * directly in the database.
- */
-const hashRefreshToken = (
-    refreshToken
-) => {
-
+const hashRefreshToken = (refreshToken) => {
     return crypto
         .createHash("sha256")
         .update(refreshToken)
         .digest("hex");
-
 };
 
 /**
- * Verify JWT
+ * FIXED: Now throws instead of returning null
+ * So middleware catch block works correctly
  */
-const verifyToken = (
-    token
-) => {
-
-    try {
-
-        return jwt.verify(
-            token,
-            process.env.JWT_SECRET
-        );
-
-    } catch {
-
-        return null;
-
-    }
-
+const verifyToken = (token) => {
+    // No try/catch here — let it throw naturally
+    return jwt.verify(token, process.env.JWT_SECRET);
 };
 
-/**
- * Decode JWT
- *
- * Doesn't verify signature.
- * Useful only for debugging.
- */
-const decodeToken = (
-    token
-) => {
-
+const decodeToken = (token) => {
     return jwt.decode(token);
-
 };
 
 module.exports = {
-
     ACCESS_TOKEN_EXPIRY,
-
     REFRESH_TOKEN_VALIDITY_DAYS,
-
     generateAccessToken,
-
     generateRefreshToken,
-
     hashRefreshToken,
-
     verifyToken,
-
     decodeToken
-
 };

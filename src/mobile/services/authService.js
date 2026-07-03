@@ -125,67 +125,97 @@ const createUserSession = async (
     ]
   );
 
-  const refreshToken =
-    generateRefreshToken();
+  // const refreshToken =
+  //   generateRefreshToken();
 
-  const tokenHash = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
+  // const tokenHash = crypto
+  //   .createHash("sha256")
+  //   .update(refreshToken)
+  //   .digest("hex");
+  // const tokenHash = hashRefreshToken(refreshToken);
 
-  const expiresAt = new Date(
-    Date.now() +
-    30 * 24 * 60 * 60 * 1000
-  );
+  // Add this debug log temporarily in createUserSession
+const refreshToken = generateRefreshToken();
+const tokenHash = hashRefreshToken(refreshToken);
 
-  await pool.query(
-    `
-    INSERT INTO refresh_tokens
-    (
-      user_id,
-      device_id,
-      token_hash,
-      expires_at
-    )
-    VALUES
-    (
-      $1,$2,$3,$4
-    )
-    `,
-    [
-      user.user_id,
-      device.device_id,
-      tokenHash,
-      expiresAt
-    ]
-  );
+console.log("Raw token length:", refreshToken.length);   
+console.log("Hash length:", tokenHash.length);             
+console.log("Storing hash:", tokenHash);
+console.log("Returning raw:", refreshToken);
 
-  await pool.query(
-    `
-    UPDATE users
-    SET last_login_at = NOW()
-    WHERE user_id = $1
-    `,
-    [user.user_id]
-  );
+      const expiresAt = new Date(
+        Date.now() +
+        REFRESH_TOKEN_VALIDITY_DAYS * 24 * 60 * 60 * 1000
+    );
+//   await pool.query(
+//     `
+//     INSERT INTO refresh_tokens
+//     (
+//       user_id,
+//       device_id,
+//       token_hash,
+//       expires_at
+//     )
+//     VALUES
+//     (
+//       $1,$2,$3,$4
+//     )
+//     `,
+//     [
+//       user.user_id,
+//       device.device_id,
+//       tokenHash,
+//       expiresAt
+//     ]
+//   );
 
-  // return {
-  //   accessToken:
-  //     generateAccessToken(user),
-  //   refreshToken,
-  //   deviceId:
-  //     device.device_id
-  // };
-  return {
-    accessToken:
-        generateAccessToken(
-            user,
-            device.device_id
-        ),
-    refreshToken,
-    deviceId:
-        device.device_id
-};
+//   await pool.query(
+//     `
+//     UPDATE users
+//     SET last_login_at = NOW()
+//     WHERE user_id = $1
+//     `,
+//     [user.user_id]
+//   );
+
+//   // return {
+//   //   accessToken:
+//   //     generateAccessToken(user),
+//   //   refreshToken,
+//   //   deviceId:
+//   //     device.device_id
+//   // };
+//   return {
+//     accessToken:
+//         generateAccessToken(
+//             user,
+//             device.device_id
+//         ),
+//     refreshToken,
+//     deviceId:
+//         device.device_id
+// };
+
+ await pool.query(
+        `
+        INSERT INTO refresh_tokens
+        (user_id, device_id, token_hash, expires_at)
+        VALUES ($1, $2, $3, $4)
+        `,
+        [user.user_id, device.device_id, tokenHash, expiresAt]
+    );
+
+    await pool.query(
+        `UPDATE users SET last_login_at = NOW() WHERE user_id = $1`,
+        [user.user_id]
+    );
+
+    return {
+        accessToken: generateAccessToken(user, device.device_id),
+        refreshToken, 
+        deviceId: device.device_id
+    };
+
 };
 
 
