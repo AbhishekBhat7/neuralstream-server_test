@@ -120,7 +120,14 @@ app.use("/api", sessionRoutes);
 app.get("/", (req, res) => {
     res.send("Welcome to the NeuralStream API");
 });
-
+app.get("/test", (req, res) => {
+    res.json({ 
+        status: "ok",
+        db_host: process.env.DB_HOST,
+        db_user: process.env.DB_USER,
+        node_env: process.env.NODE_ENV
+    });
+});
 // ONE single HTTP server for both Express and WebSocket
 const server = http.createServer(app);
 
@@ -144,5 +151,27 @@ if (!process.env.PASSENGER_APP_ENV) {
     console.log("Server Started via Passenger");
     console.log("WebSocket available at wss://yourdomain.com/ws");
 }
+
+app.use((req, res, next) => {
+    res.status(404).json({ 
+        error: "Route not found",
+        path: req.path,
+        method: req.method
+    });
+});
+
+// Handle ALL errors - shows real error in response
+app.use((err, req, res, next) => {
+    console.error("=== SERVER ERROR ===");
+    console.error("Path:", req.path);
+    console.error("Error:", err.message);
+    console.error("Stack:", err.stack);
+    console.error("===================");
+    
+    res.status(500).json({
+        error: err.message,
+        path: req.path
+    });
+});
 
 module.exports = server;

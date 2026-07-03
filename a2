@@ -1,0 +1,1633 @@
+App 3164429 output: node:internal/modules/cjs/loader:1210
+App 3164429 output:   throw err;
+App 3164429 output:   ^
+App 3164429 output: Error: Cannot find module 'dotenv'
+App 3164429 output: Require stack:
+App 3164429 output: - /home/rosettes/neuralstream.server/index.js
+App 3164429 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3164429 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3164429 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3164429 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3164429 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3164429 output:     at require (node:internal/modules/helpers:182:18)
+App 3164429 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:1:1)
+App 3164429 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3164429 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3164429 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3164429 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3164429 output:   code: 'MODULE_NOT_FOUND',
+App 3164429 output:   requireStack: [
+App 3164429 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3164429 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3164429 output:   ]
+App 3164429 output: }
+App 3164429 output: Node.js v20.20.2
+App 3165623 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3165623 output: node:internal/modules/cjs/loader:1661
+App 3165623 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3165623 output:                  ^
+App 3165623 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3165623 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3165623 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3165623 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3165623 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3165623 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3165623 output:     at require (node:internal/modules/helpers:182:18)
+App 3165623 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3165623 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3165623 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3165623 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3165623 output:   code: 'ERR_DLOPEN_FAILED'
+App 3165623 output: }
+App 3165623 output: Node.js v20.20.2
+App 3166952 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3166952 output: node:internal/modules/cjs/loader:1661
+App 3166952 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3166952 output:                  ^
+App 3166952 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3166952 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3166952 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3166952 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3166952 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3166952 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3166952 output:     at require (node:internal/modules/helpers:182:18)
+App 3166952 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3166952 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3166952 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3166952 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3166952 output:   code: 'ERR_DLOPEN_FAILED'
+App 3166952 output: }
+App 3166952 output: Node.js v20.20.2
+App 3168019 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3168019 output: node:internal/modules/cjs/loader:1661
+App 3168019 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3168019 output:                  ^
+App 3168019 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3168019 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3168019 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3168019 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3168019 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3168019 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3168019 output:     at require (node:internal/modules/helpers:182:18)
+App 3168019 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3168019 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3168019 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3168019 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3168019 output:   code: 'ERR_DLOPEN_FAILED'
+App 3168019 output: }
+App 3168019 output: Node.js v20.20.2
+App 3168451 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3168451 output: node:internal/modules/cjs/loader:1661
+App 3168451 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3168451 output:                  ^
+App 3168451 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3168451 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3168451 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3168451 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3168451 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3168451 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3168451 output:     at require (node:internal/modules/helpers:182:18)
+App 3168451 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3168451 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3168451 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3168451 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3168451 output:   code: 'ERR_DLOPEN_FAILED'
+App 3168451 output: }
+App 3168451 output: Node.js v20.20.2
+App 3168645 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3168645 output: node:internal/modules/cjs/loader:1661
+App 3168645 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3168645 output:                  ^
+App 3168645 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3168645 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3168645 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3168645 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3168645 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3168645 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3168645 output:     at require (node:internal/modules/helpers:182:18)
+App 3168645 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3168645 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3168645 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3168645 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3168645 output:   code: 'ERR_DLOPEN_FAILED'
+App 3168645 output: }
+App 3168645 output: Node.js v20.20.2
+App 3168802 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3168802 output: node:internal/modules/cjs/loader:1661
+App 3168802 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3168802 output:                  ^
+App 3168802 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3168802 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3168802 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3168802 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3168802 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3168802 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3168802 output:     at require (node:internal/modules/helpers:182:18)
+App 3168802 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3168802 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3168802 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3168802 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3168802 output:   code: 'ERR_DLOPEN_FAILED'
+App 3168802 output: }
+App 3168802 output: Node.js v20.20.2
+App 3199051 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3199051 output: node:internal/modules/cjs/loader:1661
+App 3199051 output:   return process.dlopen(module, path.toNamespacedPath(filename));
+App 3199051 output:                  ^
+App 3199051 output: Error: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/prebuilds/linux-x64/argon2.glibc.node)
+App 3199051 output:     at Module._extensions..node (node:internal/modules/cjs/loader:1661:18)
+App 3199051 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3199051 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3199051 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3199051 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3199051 output:     at require (node:internal/modules/helpers:182:18)
+App 3199051 output:     at load (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/node-gyp-build/node-gyp-build.js:22:10)
+App 3199051 output:     at Object.<anonymous> (/home/rosettes/nodevenv/neuralstream.server/20/lib/node_modules/argon2/argon2.cjs:6:32)
+App 3199051 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3199051 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) {
+App 3199051 output:   code: 'ERR_DLOPEN_FAILED'
+App 3199051 output: }
+App 3199051 output: Node.js v20.20.2
+App 3223314 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3223314 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3223314 output: DB Host: undefined
+App 3223314 output: DB User: undefined
+App 3223314 output: Server Started
+App 3223314 output: Connected to PostgreSQL database.
+App 3229849 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3229849 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3229849 output: DB Host: undefined
+App 3229849 output: DB User: undefined
+App 3229849 output: Server Started
+App 3229849 output: Connected to PostgreSQL database.
+App 3478568 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3478568 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3478568 output: DB Host: undefined
+App 3478568 output: DB User: undefined
+App 3478568 output: Server Started
+App 3478568 output: Connected to PostgreSQL database.
+App 3780439 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3780439 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3780439 output: DB Host: undefined
+App 3780439 output: DB User: undefined
+App 3780439 output: Server Started
+App 3780439 output: Connected to PostgreSQL database.
+App 4190712 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 4190712 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 4190712 output: DB Host: undefined
+App 4190712 output: DB User: undefined
+App 4190712 output: Server Started
+App 4190712 output: Connected to PostgreSQL database.
+App 71192 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 71192 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 71192 output: DB Host: undefined
+App 71192 output: DB User: undefined
+App 71192 output: Server Started
+App 71192 output: Connected to PostgreSQL database.
+App 861352 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 861352 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 861352 output: DB Host: undefined
+App 861352 output: DB User: undefined
+App 861352 output: Server Started
+App 861352 output: Connected to PostgreSQL database.
+App 1186217 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 1186217 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1186217 output: DB Host: undefined
+App 1186217 output: DB User: undefined
+App 1186217 output: Server Started
+App 1186217 output: Connected to PostgreSQL database.
+App 2194001 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2194001 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2194001 output: DB Host: undefined
+App 2194001 output: DB User: undefined
+App 2194001 output: Server Started
+App 2194001 output: Connected to PostgreSQL database.
+App 3212122 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3212122 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3212122 output: DB Host: undefined
+App 3212122 output: DB User: undefined
+App 3212122 output: Server Started
+App 3212122 output: Connected to PostgreSQL database.
+App 4049930 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 4049930 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 4049930 output: DB Host: undefined
+App 4049930 output: DB User: undefined
+App 4049930 output: Server Started
+App 4049930 output: Connected to PostgreSQL database.
+App 3306 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3306 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3306 output: DB Host: undefined
+App 3306 output: DB User: undefined
+App 3306 output: Server Started
+App 3306 output: Connected to PostgreSQL database.
+App 2593696 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2593696 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2593696 output: DB Host: undefined
+App 2593696 output: DB User: undefined
+App 2593696 output: Server Started
+App 2593696 output: Connected to PostgreSQL database.
+App 460310 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 460310 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 460310 output: DB Host: undefined
+App 460310 output: DB User: undefined
+App 460310 output: Server Started
+App 460310 output: Connected to PostgreSQL database.
+App 2100428 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2100428 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 2100428 output: DB Host: undefined
+App 2100428 output: DB User: undefined
+App 2100428 output: Server Started
+App 2100428 output: Connected to PostgreSQL database.
+App 438310 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 438310 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 438310 output: Server Started
+App 3898661 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3898661 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3898661 output: Server Started
+App 3898661 output: (node:3898661) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+App 3898661 output: In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+App 3898661 output: To prepare for this change:
+App 3898661 output: - If you want the current behavior, explicitly use 'sslmode=verify-full'
+App 3898661 output: - If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+App 3898661 output: See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+App 3898661 output: (Use `node --trace-warnings ...` to show where the warning was created)
+App 4144032 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 4144032 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 4144032 output: DB Host: undefined
+App 4144032 output: DB User: undefined
+App 4144032 output: Server Started
+App 4144032 output: Connected to PostgreSQL database.
+App 1776868 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1776868 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1776868 output: DB Host: undefined
+App 1776868 output: DB User: undefined
+App 1776868 output: Server Started
+App 1776868 output: Connected to PostgreSQL database.
+App 2295175 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2295175 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2295175 output: DB Host: undefined
+App 2295175 output: DB User: undefined
+App 2295175 output: Server Started
+App 2295175 output: Connected to PostgreSQL database.
+App 1019952 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1019952 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 1019952 output: DB Host: undefined
+App 1019952 output: DB User: undefined
+App 1019952 output: Server Started
+App 1019952 output: Connected to PostgreSQL database.
+App 1347047 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 1347047 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1347047 output: DB Host: undefined
+App 1347047 output: DB User: undefined
+App 1347047 output: Server Started
+App 1347047 output: Connected to PostgreSQL database.
+App 1882957 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1882957 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1882957 output: DB Host: undefined
+App 1882957 output: DB User: undefined
+App 1882957 output: Server Started
+App 1882957 output: Connected to PostgreSQL database.
+App 1905942 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1905942 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1905942 output: DB Host: undefined
+App 1905942 output: DB User: undefined
+App 1905942 output: Server Started
+App 1905942 output: Connected to PostgreSQL database.
+App 2061076 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2061076 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2061076 output: DB Host: undefined
+App 2061076 output: DB User: undefined
+App 2061076 output: Server Started
+App 2061076 output: Connected to PostgreSQL database.
+App 2210659 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2210659 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 2210659 output: DB Host: undefined
+App 2210659 output: DB User: undefined
+App 2210659 output: Server Started
+App 2210659 output: Connected to PostgreSQL database.
+App 2285675 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2285675 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2285675 output: DB Host: undefined
+App 2285675 output: DB User: undefined
+App 2285675 output: Server Started
+App 2285675 output: Connected to PostgreSQL database.
+App 2604074 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2604074 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2604074 output: DB Host: undefined
+App 2604074 output: DB User: undefined
+App 2604074 output: Server Started
+App 2604074 output: Connected to PostgreSQL database.
+App 2861073 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2861073 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2861073 output: DB Host: undefined
+App 2861073 output: DB User: undefined
+App 2861073 output: Server Started
+App 2861073 output: Connected to PostgreSQL database.
+App 3408809 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3408809 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3408809 output: DB Host: undefined
+App 3408809 output: DB User: undefined
+App 3408809 output: Server Started
+App 3408809 output: Connected to PostgreSQL database.
+App 3482761 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3482761 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3482761 output: DB Host: undefined
+App 3482761 output: DB User: undefined
+App 3482761 output: Server Started
+App 3482761 output: Connected to PostgreSQL database.
+App 3925713 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3925713 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3925713 output: DB Host: undefined
+App 3925713 output: DB User: undefined
+App 3925713 output: Server Started
+App 3925713 output: Connected to PostgreSQL database.
+App 1009144 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1009144 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1009144 output: DB Host: undefined
+App 1009144 output: DB User: undefined
+App 1009144 output: Server Started
+App 1009144 output: Connected to PostgreSQL database.
+App 1256441 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 1256441 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 1256441 output: DB Host: undefined
+App 1256441 output: DB User: undefined
+App 1256441 output: Server Started
+App 1256441 output: Connected to PostgreSQL database.
+App 2325306 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2325306 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2325306 output: DB Host: undefined
+App 2325306 output: DB User: undefined
+App 2325306 output: Server Started
+App 2325306 output: Connected to PostgreSQL database.
+App 2650530 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2650530 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2650530 output: DB Host: undefined
+App 2650530 output: DB User: undefined
+App 2650530 output: Server Started
+App 2650530 output: Connected to PostgreSQL database.
+App 3166981 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3166981 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3166981 output: DB Host: undefined
+App 3166981 output: DB User: undefined
+App 3166981 output: Server Started
+App 3166981 output: Connected to PostgreSQL database.
+App 3966427 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3966427 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3966427 output: DB Host: undefined
+App 3966427 output: DB User: undefined
+App 3966427 output: Server Started
+App 3966427 output: Connected to PostgreSQL database.
+App 195454 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 195454 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 195454 output: DB Host: undefined
+App 195454 output: DB User: undefined
+App 195454 output: Server Started
+App 195454 output: Connected to PostgreSQL database.
+App 1546955 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1546955 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1546955 output: DB Host: undefined
+App 1546955 output: DB User: undefined
+App 1546955 output: Server Started
+App 1546955 output: Connected to PostgreSQL database.
+App 1937542 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1937542 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1937542 output: DB Host: undefined
+App 1937542 output: DB User: undefined
+App 1937542 output: Server Started
+App 1937542 output: Connected to PostgreSQL database.
+App 2215616 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 2215616 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2215616 output: DB Host: undefined
+App 2215616 output: DB User: undefined
+App 2215616 output: Server Started
+App 2215616 output: Connected to PostgreSQL database.
+App 2479852 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2479852 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2479852 output: DB Host: undefined
+App 2479852 output: DB User: undefined
+App 2479852 output: Server Started
+App 2479852 output: Connected to PostgreSQL database.
+App 3166472 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3166472 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3166472 output: DB Host: undefined
+App 3166472 output: DB User: undefined
+App 3166472 output: Server Started
+App 3166472 output: Connected to PostgreSQL database.
+App 1145191 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1145191 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1145191 output: DB Host: undefined
+App 1145191 output: DB User: undefined
+App 1145191 output: Server Started
+App 1145191 output: Connected to PostgreSQL database.
+App 2738834 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2738834 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2738834 output: DB Host: undefined
+App 2738834 output: DB User: undefined
+App 2738834 output: Server Started
+App 2738834 output: Connected to PostgreSQL database.
+App 3454344 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3454344 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3454344 output: DB Host: undefined
+App 3454344 output: DB User: undefined
+App 3454344 output: Server Started
+App 3454344 output: Connected to PostgreSQL database.
+App 660260 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 660260 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 660260 output: DB Host: undefined
+App 660260 output: DB User: undefined
+App 660260 output: Server Started
+App 660260 output: Connected to PostgreSQL database.
+App 1115208 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1115208 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1115208 output: DB Host: undefined
+App 1115208 output: DB User: undefined
+App 1115208 output: Server Started
+App 1115208 output: Connected to PostgreSQL database.
+App 1300634 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1300634 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1300634 output: DB Host: undefined
+App 1300634 output: DB User: undefined
+App 1300634 output: Server Started
+App 1300634 output: Connected to PostgreSQL database.
+App 1369222 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 1369222 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1369222 output: DB Host: undefined
+App 1369222 output: DB User: undefined
+App 1369222 output: Server Started
+App 1369222 output: Connected to PostgreSQL database.
+App 1928826 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1928826 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1928826 output: DB Host: undefined
+App 1928826 output: DB User: undefined
+App 1928826 output: Server Started
+App 1928826 output: Connected to PostgreSQL database.
+App 2158681 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2158681 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2158681 output: DB Host: undefined
+App 2158681 output: DB User: undefined
+App 2158681 output: Server Started
+App 2158681 output: Connected to PostgreSQL database.
+App 2516343 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2516343 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2516343 output: DB Host: undefined
+App 2516343 output: DB User: undefined
+App 2516343 output: Server Started
+App 2516343 output: Connected to PostgreSQL database.
+App 3530073 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3530073 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3530073 output: DB Host: undefined
+App 3530073 output: DB User: undefined
+App 3530073 output: Server Started
+App 3530073 output: Connected to PostgreSQL database.
+App 842944 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 842944 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 842944 output: DB Host: undefined
+App 842944 output: DB User: undefined
+App 842944 output: Server Started
+App 842944 output: Connected to PostgreSQL database.
+App 2535910 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2535910 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2535910 output: DB Host: undefined
+App 2535910 output: DB User: undefined
+App 2535910 output: Server Started
+App 2535910 output: Connected to PostgreSQL database.
+App 2956687 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2956687 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2956687 output: DB Host: undefined
+App 2956687 output: DB User: undefined
+App 2956687 output: Server Started
+App 2956687 output: Connected to PostgreSQL database.
+App 3359252 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3359252 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3359252 output: DB Host: undefined
+App 3359252 output: DB User: undefined
+App 3359252 output: Server Started
+App 3359252 output: Connected to PostgreSQL database.
+App 3750637 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3750637 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3750637 output: DB Host: undefined
+App 3750637 output: DB User: undefined
+App 3750637 output: Server Started
+App 3750637 output: Connected to PostgreSQL database.
+App 2360854 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2360854 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2360854 output: DB Host: undefined
+App 2360854 output: DB User: undefined
+App 2360854 output: Server Started
+App 2360854 output: Connected to PostgreSQL database.
+App 2884538 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2884538 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2884538 output: DB Host: undefined
+App 2884538 output: DB User: undefined
+App 2884538 output: Server Started
+App 2884538 output: Connected to PostgreSQL database.
+App 4171669 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 4171669 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 4171669 output: DB Host: undefined
+App 4171669 output: DB User: undefined
+App 4171669 output: Server Started
+App 4171669 output: Connected to PostgreSQL database.
+App 1921397 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 1921397 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1921397 output: DB Host: undefined
+App 1921397 output: DB User: undefined
+App 1921397 output: Server Started
+App 1921397 output: Connected to PostgreSQL database.
+App 2809953 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2809953 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2809953 output: DB Host: undefined
+App 2809953 output: DB User: undefined
+App 2809953 output: Server Started
+App 2809953 output: Connected to PostgreSQL database.
+App 3419914 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3419914 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3419914 output: DB Host: undefined
+App 3419914 output: DB User: undefined
+App 3419914 output: Server Started
+App 3419914 output: Connected to PostgreSQL database.
+App 1321610 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1321610 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1321610 output: DB Host: undefined
+App 1321610 output: DB User: undefined
+App 1321610 output: Server Started
+App 1321610 output: Connected to PostgreSQL database.
+App 2192508 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 2192508 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 2192508 output: DB Host: undefined
+App 2192508 output: DB User: undefined
+App 2192508 output: Server Started
+App 2192508 output: Connected to PostgreSQL database.
+App 2544760 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2544760 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2544760 output: DB Host: undefined
+App 2544760 output: DB User: undefined
+App 2544760 output: Server Started
+App 2544760 output: Connected to PostgreSQL database.
+App 2760618 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 2760618 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 2760618 output: DB Host: undefined
+App 2760618 output: DB User: undefined
+App 2760618 output: Server Started
+App 2760618 output: Connected to PostgreSQL database.
+App 4106015 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 4106015 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 4106015 output: DB Host: undefined
+App 4106015 output: DB User: undefined
+App 4106015 output: Server Started
+App 4106015 output: Connected to PostgreSQL database.
+App 1233463 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1233463 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1233463 output: DB Host: undefined
+App 1233463 output: DB User: undefined
+App 1233463 output: Server Started
+App 1233463 output: Connected to PostgreSQL database.
+App 1565346 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 1565346 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 1565346 output: DB Host: undefined
+App 1565346 output: DB User: undefined
+App 1565346 output: Server Started
+App 1565346 output: Connected to PostgreSQL database.
+App 1963434 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1963434 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1963434 output: DB Host: undefined
+App 1963434 output: DB User: undefined
+App 1963434 output: Server Started
+App 1963434 output: Connected to PostgreSQL database.
+App 2256679 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 2256679 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2256679 output: DB Host: undefined
+App 2256679 output: DB User: undefined
+App 2256679 output: Server Started
+App 2256679 output: Connected to PostgreSQL database.
+App 2454080 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 2454080 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2454080 output: DB Host: undefined
+App 2454080 output: DB User: undefined
+App 2454080 output: Server Started
+App 2943599 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2943599 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 2943599 output: DB Host: undefined
+App 2943599 output: DB User: undefined
+App 2943599 output: Server Started
+App 2943599 output: Connected to PostgreSQL database.
+App 3814156 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3814156 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3814156 output: DB Host: undefined
+App 3814156 output: DB User: undefined
+App 3814156 output: Server Started
+App 3814156 output: Connected to PostgreSQL database.
+App 3957114 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3957114 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3957114 output: DB Host: undefined
+App 3957114 output: DB User: undefined
+App 3957114 output: Server Started
+App 3957114 output: Connected to PostgreSQL database.
+App 280995 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 280995 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 280995 output: DB Host: undefined
+App 280995 output: DB User: undefined
+App 280995 output: Server Started
+App 280995 output: Connected to PostgreSQL database.
+App 1400164 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1400164 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1400164 output: DB Host: undefined
+App 1400164 output: DB User: undefined
+App 1400164 output: Server Started
+App 1400164 output: Connected to PostgreSQL database.
+App 1929960 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1929960 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1929960 output: DB Host: undefined
+App 1929960 output: DB User: undefined
+App 1929960 output: Server Started
+App 1929960 output: Connected to PostgreSQL database.
+App 2233928 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 2233928 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 2233928 output: DB Host: undefined
+App 2233928 output: DB User: undefined
+App 2233928 output: Server Started
+App 2233928 output: Connected to PostgreSQL database.
+App 3810761 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3810761 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3810761 output: DB Host: undefined
+App 3810761 output: DB User: undefined
+App 3810761 output: Server Started
+App 3810761 output: Connected to PostgreSQL database.
+App 636689 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 636689 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 636689 output: DB Host: undefined
+App 636689 output: DB User: undefined
+App 636689 output: Server Started
+App 636689 output: Connected to PostgreSQL database.
+App 819393 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 819393 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 819393 output: DB Host: undefined
+App 819393 output: DB User: undefined
+App 819393 output: Server Started
+App 819393 output: Connected to PostgreSQL database.
+App 933387 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 933387 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 933387 output: DB Host: undefined
+App 933387 output: DB User: undefined
+App 933387 output: Server Started
+App 933387 output: Connected to PostgreSQL database.
+App 938124 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 938124 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 938124 output: DB Host: undefined
+App 938124 output: DB User: undefined
+App 938124 output: Server Started
+App 938124 output: Connected to PostgreSQL database.
+App 952775 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 952775 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 952775 output: DB Host: undefined
+App 952775 output: DB User: undefined
+App 952775 output: Server Started
+App 952775 output: Connected to PostgreSQL database.
+App 969586 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 969586 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 969586 output: DB Host: undefined
+App 969586 output: DB User: undefined
+App 969586 output: Server Started
+App 969586 output: Connected to PostgreSQL database.
+App 985904 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 985904 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 985904 output: DB Host: undefined
+App 985904 output: DB User: undefined
+App 985904 output: node:internal/modules/cjs/loader:1210
+App 985904 output:   throw err;
+App 985904 output:   ^
+App 985904 output: Error: Cannot find module 'ws'
+App 985904 output: Require stack:
+App 985904 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 985904 output: - /home/rosettes/neuralstream.server/index.js
+App 985904 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 985904 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 985904 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 985904 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 985904 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 985904 output:     at require (node:internal/modules/helpers:182:18)
+App 985904 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 985904 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 985904 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 985904 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 985904 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 985904 output:   code: 'MODULE_NOT_FOUND',
+App 985904 output:   requireStack: [
+App 985904 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 985904 output:     '/home/rosettes/neuralstream.server/index.js',
+App 985904 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 985904 output:   ]
+App 985904 output: }
+App 985904 output: Node.js v20.20.2
+App 987362 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 987362 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 987362 output: DB Host: undefined
+App 987362 output: DB User: undefined
+App 987362 output: node:internal/modules/cjs/loader:1210
+App 987362 output:   throw err;
+App 987362 output:   ^
+App 987362 output: Error: Cannot find module 'ws'
+App 987362 output: Require stack:
+App 987362 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 987362 output: - /home/rosettes/neuralstream.server/index.js
+App 987362 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 987362 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 987362 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 987362 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 987362 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 987362 output:     at require (node:internal/modules/helpers:182:18)
+App 987362 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 987362 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 987362 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 987362 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 987362 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 987362 output:   code: 'MODULE_NOT_FOUND',
+App 987362 output:   requireStack: [
+App 987362 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 987362 output:     '/home/rosettes/neuralstream.server/index.js',
+App 987362 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 987362 output:   ]
+App 987362 output: }
+App 987362 output: Node.js v20.20.2
+App 1007036 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1007036 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1007036 output: DB Host: undefined
+App 1007036 output: DB User: undefined
+App 1007036 output: node:internal/modules/cjs/loader:1210
+App 1007036 output:   throw err;
+App 1007036 output:   ^
+App 1007036 output: Error: Cannot find module 'ws'
+App 1007036 output: Require stack:
+App 1007036 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1007036 output: - /home/rosettes/neuralstream.server/index.js
+App 1007036 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1007036 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1007036 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1007036 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1007036 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1007036 output:     at require (node:internal/modules/helpers:182:18)
+App 1007036 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1007036 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1007036 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1007036 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1007036 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1007036 output:   code: 'MODULE_NOT_FOUND',
+App 1007036 output:   requireStack: [
+App 1007036 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1007036 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1007036 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1007036 output:   ]
+App 1007036 output: }
+App 1007036 output: Node.js v20.20.2
+App 1007765 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 1007765 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1007765 output: DB Host: undefined
+App 1007765 output: DB User: undefined
+App 1007765 output: node:internal/modules/cjs/loader:1210
+App 1007765 output:   throw err;
+App 1007765 output:   ^
+App 1007765 output: Error: Cannot find module 'ws'
+App 1007765 output: Require stack:
+App 1007765 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1007765 output: - /home/rosettes/neuralstream.server/index.js
+App 1007765 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1007765 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1007765 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1007765 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1007765 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1007765 output:     at require (node:internal/modules/helpers:182:18)
+App 1007765 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1007765 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1007765 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1007765 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1007765 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1007765 output:   code: 'MODULE_NOT_FOUND',
+App 1007765 output:   requireStack: [
+App 1007765 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1007765 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1007765 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1007765 output:   ]
+App 1007765 output: }
+App 1007765 output: Node.js v20.20.2
+App 1007931 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1007931 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1007931 output: DB Host: undefined
+App 1007931 output: DB User: undefined
+App 1007931 output: node:internal/modules/cjs/loader:1210
+App 1007931 output:   throw err;
+App 1007931 output:   ^
+App 1007931 output: Error: Cannot find module 'ws'
+App 1007931 output: Require stack:
+App 1007931 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1007931 output: - /home/rosettes/neuralstream.server/index.js
+App 1007931 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1007931 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1007931 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1007931 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1007931 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1007931 output:     at require (node:internal/modules/helpers:182:18)
+App 1007931 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1007931 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1007931 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1007931 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1007931 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1007931 output:   code: 'MODULE_NOT_FOUND',
+App 1007931 output:   requireStack: [
+App 1007931 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1007931 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1007931 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1007931 output:   ]
+App 1007931 output: }
+App 1007931 output: Node.js v20.20.2
+App 1036538 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1036538 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1036538 output: DB Host: undefined
+App 1036538 output: DB User: undefined
+App 1036538 output: node:internal/modules/cjs/loader:1210
+App 1036538 output:   throw err;
+App 1036538 output:   ^
+App 1036538 output: Error: Cannot find module 'ws'
+App 1036538 output: Require stack:
+App 1036538 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1036538 output: - /home/rosettes/neuralstream.server/index.js
+App 1036538 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1036538 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1036538 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1036538 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1036538 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1036538 output:     at require (node:internal/modules/helpers:182:18)
+App 1036538 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1036538 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1036538 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1036538 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1036538 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1036538 output:   code: 'MODULE_NOT_FOUND',
+App 1036538 output:   requireStack: [
+App 1036538 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1036538 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1036538 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1036538 output:   ]
+App 1036538 output: }
+App 1036538 output: Node.js v20.20.2
+App 1037319 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 1037319 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1037319 output: DB Host: undefined
+App 1037319 output: DB User: undefined
+App 1037319 output: node:internal/modules/cjs/loader:1210
+App 1037319 output:   throw err;
+App 1037319 output:   ^
+App 1037319 output: Error: Cannot find module 'ws'
+App 1037319 output: Require stack:
+App 1037319 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1037319 output: - /home/rosettes/neuralstream.server/index.js
+App 1037319 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1037319 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1037319 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1037319 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1037319 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1037319 output:     at require (node:internal/modules/helpers:182:18)
+App 1037319 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1037319 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1037319 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1037319 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1037319 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1037319 output:   code: 'MODULE_NOT_FOUND',
+App 1037319 output:   requireStack: [
+App 1037319 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1037319 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1037319 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1037319 output:   ]
+App 1037319 output: }
+App 1037319 output: Node.js v20.20.2
+App 1078014 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1078014 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 1078014 output: DB Host: undefined
+App 1078014 output: DB User: undefined
+App 1078014 output: node:internal/modules/cjs/loader:1210
+App 1078014 output:   throw err;
+App 1078014 output:   ^
+App 1078014 output: Error: Cannot find module 'ws'
+App 1078014 output: Require stack:
+App 1078014 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1078014 output: - /home/rosettes/neuralstream.server/index.js
+App 1078014 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1078014 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1078014 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1078014 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1078014 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1078014 output:     at require (node:internal/modules/helpers:182:18)
+App 1078014 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1078014 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1078014 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1078014 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1078014 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1078014 output:   code: 'MODULE_NOT_FOUND',
+App 1078014 output:   requireStack: [
+App 1078014 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1078014 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1078014 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1078014 output:   ]
+App 1078014 output: }
+App 1078014 output: Node.js v20.20.2
+App 1165792 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 1165792 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 1165792 output: DB Host: undefined
+App 1165792 output: DB User: undefined
+App 1165792 output: node:internal/modules/cjs/loader:1210
+App 1165792 output:   throw err;
+App 1165792 output:   ^
+App 1165792 output: Error: Cannot find module 'ws'
+App 1165792 output: Require stack:
+App 1165792 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1165792 output: - /home/rosettes/neuralstream.server/index.js
+App 1165792 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1165792 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1165792 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1165792 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1165792 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1165792 output:     at require (node:internal/modules/helpers:182:18)
+App 1165792 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1165792 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1165792 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1165792 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1165792 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1165792 output:   code: 'MODULE_NOT_FOUND',
+App 1165792 output:   requireStack: [
+App 1165792 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1165792 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1165792 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1165792 output:   ]
+App 1165792 output: }
+App 1165792 output: Node.js v20.20.2
+App 1686484 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 1686484 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 1686484 output: DB Host: undefined
+App 1686484 output: DB User: undefined
+App 1686484 output: node:internal/modules/cjs/loader:1210
+App 1686484 output:   throw err;
+App 1686484 output:   ^
+App 1686484 output: Error: Cannot find module 'ws'
+App 1686484 output: Require stack:
+App 1686484 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1686484 output: - /home/rosettes/neuralstream.server/index.js
+App 1686484 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1686484 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1686484 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1686484 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1686484 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1686484 output:     at require (node:internal/modules/helpers:182:18)
+App 1686484 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1686484 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1686484 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1686484 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1686484 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1686484 output:   code: 'MODULE_NOT_FOUND',
+App 1686484 output:   requireStack: [
+App 1686484 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1686484 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1686484 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1686484 output:   ]
+App 1686484 output: }
+App 1686484 output: Node.js v20.20.2
+App 1850710 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 1850710 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 1850710 output: DB Host: undefined
+App 1850710 output: DB User: undefined
+App 1850710 output: node:internal/modules/cjs/loader:1210
+App 1850710 output:   throw err;
+App 1850710 output:   ^
+App 1850710 output: Error: Cannot find module 'ws'
+App 1850710 output: Require stack:
+App 1850710 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 1850710 output: - /home/rosettes/neuralstream.server/index.js
+App 1850710 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 1850710 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 1850710 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 1850710 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 1850710 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1850710 output:     at require (node:internal/modules/helpers:182:18)
+App 1850710 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 1850710 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 1850710 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 1850710 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 1850710 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 1850710 output:   code: 'MODULE_NOT_FOUND',
+App 1850710 output:   requireStack: [
+App 1850710 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 1850710 output:     '/home/rosettes/neuralstream.server/index.js',
+App 1850710 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 1850710 output:   ]
+App 1850710 output: }
+App 1850710 output: Node.js v20.20.2
+App 3060807 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3060807 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3060807 output: DB Host: undefined
+App 3060807 output: DB User: undefined
+App 3060807 output: node:internal/modules/cjs/loader:1210
+App 3060807 output:   throw err;
+App 3060807 output:   ^
+App 3060807 output: Error: Cannot find module 'ws'
+App 3060807 output: Require stack:
+App 3060807 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3060807 output: - /home/rosettes/neuralstream.server/index.js
+App 3060807 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3060807 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3060807 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3060807 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3060807 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3060807 output:     at require (node:internal/modules/helpers:182:18)
+App 3060807 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3060807 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3060807 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3060807 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3060807 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3060807 output:   code: 'MODULE_NOT_FOUND',
+App 3060807 output:   requireStack: [
+App 3060807 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3060807 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3060807 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3060807 output:   ]
+App 3060807 output: }
+App 3060807 output: Node.js v20.20.2
+App 3061076 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3061076 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3061076 output: DB Host: undefined
+App 3061076 output: DB User: undefined
+App 3061076 output: node:internal/modules/cjs/loader:1210
+App 3061076 output:   throw err;
+App 3061076 output:   ^
+App 3061076 output: Error: Cannot find module 'ws'
+App 3061076 output: Require stack:
+App 3061076 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3061076 output: - /home/rosettes/neuralstream.server/index.js
+App 3061076 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3061076 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3061076 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3061076 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3061076 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3061076 output:     at require (node:internal/modules/helpers:182:18)
+App 3061076 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3061076 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3061076 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3061076 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3061076 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3061076 output:   code: 'MODULE_NOT_FOUND',
+App 3061076 output:   requireStack: [
+App 3061076 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3061076 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3061076 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3061076 output:   ]
+App 3061076 output: }
+App 3061076 output: Node.js v20.20.2
+App 3061370 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3061370 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3061370 output: DB Host: undefined
+App 3061370 output: DB User: undefined
+App 3061370 output: node:internal/modules/cjs/loader:1210
+App 3061370 output:   throw err;
+App 3061370 output:   ^
+App 3061370 output: Error: Cannot find module 'ws'
+App 3061370 output: Require stack:
+App 3061370 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3061370 output: - /home/rosettes/neuralstream.server/index.js
+App 3061370 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3061370 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3061370 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3061370 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3061370 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3061370 output:     at require (node:internal/modules/helpers:182:18)
+App 3061370 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3061370 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3061370 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3061370 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3061370 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3061370 output:   code: 'MODULE_NOT_FOUND',
+App 3061370 output:   requireStack: [
+App 3061370 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3061370 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3061370 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3061370 output:   ]
+App 3061370 output: }
+App 3061370 output: Node.js v20.20.2
+App 3061921 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3061921 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3061921 output: DB Host: undefined
+App 3061921 output: DB User: undefined
+App 3061921 output: node:internal/modules/cjs/loader:1210
+App 3061921 output:   throw err;
+App 3061921 output:   ^
+App 3061921 output: Error: Cannot find module 'ws'
+App 3061921 output: Require stack:
+App 3061921 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3061921 output: - /home/rosettes/neuralstream.server/index.js
+App 3061921 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3061921 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3061921 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3061921 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3061921 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3061921 output:     at require (node:internal/modules/helpers:182:18)
+App 3061921 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3061921 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3061921 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3061921 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3061921 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3061921 output:   code: 'MODULE_NOT_FOUND',
+App 3061921 output:   requireStack: [
+App 3061921 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3061921 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3061921 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3061921 output:   ]
+App 3061921 output: }
+App 3061921 output: Node.js v20.20.2
+App 3359301 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3359301 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3359301 output: DB Host: undefined
+App 3359301 output: DB User: undefined
+App 3359301 output: node:internal/modules/cjs/loader:1210
+App 3359301 output:   throw err;
+App 3359301 output:   ^
+App 3359301 output: Error: Cannot find module 'ws'
+App 3359301 output: Require stack:
+App 3359301 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3359301 output: - /home/rosettes/neuralstream.server/index.js
+App 3359301 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3359301 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3359301 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3359301 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3359301 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3359301 output:     at require (node:internal/modules/helpers:182:18)
+App 3359301 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3359301 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3359301 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3359301 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3359301 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3359301 output:   code: 'MODULE_NOT_FOUND',
+App 3359301 output:   requireStack: [
+App 3359301 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3359301 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3359301 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3359301 output:   ]
+App 3359301 output: }
+App 3359301 output: Node.js v20.20.2
+App 3359982 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3359982 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3359982 output: DB Host: undefined
+App 3359982 output: DB User: undefined
+App 3359982 output: node:internal/modules/cjs/loader:1210
+App 3359982 output:   throw err;
+App 3359982 output:   ^
+App 3359982 output: Error: Cannot find module 'ws'
+App 3359982 output: Require stack:
+App 3359982 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3359982 output: - /home/rosettes/neuralstream.server/index.js
+App 3359982 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3359982 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3359982 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3359982 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3359982 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3359982 output:     at require (node:internal/modules/helpers:182:18)
+App 3359982 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3359982 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3359982 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3359982 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3359982 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3359982 output:   code: 'MODULE_NOT_FOUND',
+App 3359982 output:   requireStack: [
+App 3359982 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3359982 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3359982 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3359982 output:   ]
+App 3359982 output: }
+App 3359982 output: Node.js v20.20.2
+App 3360426 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3360426 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3360426 output: DB Host: undefined
+App 3360426 output: DB User: undefined
+App 3360426 output: node:internal/modules/cjs/loader:1210
+App 3360426 output:   throw err;
+App 3360426 output:   ^
+App 3360426 output: Error: Cannot find module 'ws'
+App 3360426 output: Require stack:
+App 3360426 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3360426 output: - /home/rosettes/neuralstream.server/index.js
+App 3360426 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3360426 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3360426 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3360426 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3360426 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3360426 output:     at require (node:internal/modules/helpers:182:18)
+App 3360426 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3360426 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3360426 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3360426 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3360426 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3360426 output:   code: 'MODULE_NOT_FOUND',
+App 3360426 output:   requireStack: [
+App 3360426 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3360426 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3360426 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3360426 output:   ]
+App 3360426 output: }
+App 3360426 output: Node.js v20.20.2
+App 3360825 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3360825 output: ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+App 3360825 output: DB Host: undefined
+App 3360825 output: DB User: undefined
+App 3360825 output: node:internal/modules/cjs/loader:1210
+App 3360825 output:   throw err;
+App 3360825 output:   ^
+App 3360825 output: Error: Cannot find module 'ws'
+App 3360825 output: Require stack:
+App 3360825 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3360825 output: - /home/rosettes/neuralstream.server/index.js
+App 3360825 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3360825 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3360825 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3360825 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3360825 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3360825 output:     at require (node:internal/modules/helpers:182:18)
+App 3360825 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3360825 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3360825 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3360825 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3360825 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3360825 output:   code: 'MODULE_NOT_FOUND',
+App 3360825 output:   requireStack: [
+App 3360825 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3360825 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3360825 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3360825 output:   ]
+App 3360825 output: }
+App 3360825 output: Node.js v20.20.2
+App 3361227 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3361227 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3361227 output: DB Host: undefined
+App 3361227 output: DB User: undefined
+App 3361227 output: node:internal/modules/cjs/loader:1210
+App 3361227 output:   throw err;
+App 3361227 output:   ^
+App 3361227 output: Error: Cannot find module 'ws'
+App 3361227 output: Require stack:
+App 3361227 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3361227 output: - /home/rosettes/neuralstream.server/index.js
+App 3361227 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3361227 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3361227 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3361227 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3361227 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3361227 output:     at require (node:internal/modules/helpers:182:18)
+App 3361227 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3361227 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3361227 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3361227 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3361227 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3361227 output:   code: 'MODULE_NOT_FOUND',
+App 3361227 output:   requireStack: [
+App 3361227 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3361227 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3361227 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3361227 output:   ]
+App 3361227 output: }
+App 3361227 output: Node.js v20.20.2
+App 3409447 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3409447 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3409447 output: DB Host: undefined
+App 3409447 output: DB User: undefined
+App 3409447 output: node:internal/modules/cjs/loader:1210
+App 3409447 output:   throw err;
+App 3409447 output:   ^
+App 3409447 output: Error: Cannot find module 'ws'
+App 3409447 output: Require stack:
+App 3409447 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3409447 output: - /home/rosettes/neuralstream.server/index.js
+App 3409447 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3409447 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3409447 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3409447 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3409447 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3409447 output:     at require (node:internal/modules/helpers:182:18)
+App 3409447 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3409447 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3409447 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3409447 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3409447 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3409447 output:   code: 'MODULE_NOT_FOUND',
+App 3409447 output:   requireStack: [
+App 3409447 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3409447 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3409447 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3409447 output:   ]
+App 3409447 output: }
+App 3409447 output: Node.js v20.20.2
+App 3410691 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3410691 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3410691 output: DB Host: undefined
+App 3410691 output: DB User: undefined
+App 3410691 output: node:internal/modules/cjs/loader:1210
+App 3410691 output:   throw err;
+App 3410691 output:   ^
+App 3410691 output: Error: Cannot find module 'ws'
+App 3410691 output: Require stack:
+App 3410691 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3410691 output: - /home/rosettes/neuralstream.server/index.js
+App 3410691 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3410691 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3410691 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3410691 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3410691 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3410691 output:     at require (node:internal/modules/helpers:182:18)
+App 3410691 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3410691 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3410691 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3410691 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3410691 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3410691 output:   code: 'MODULE_NOT_FOUND',
+App 3410691 output:   requireStack: [
+App 3410691 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3410691 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3410691 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3410691 output:   ]
+App 3410691 output: }
+App 3410691 output: Node.js v20.20.2
+App 3410942 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3410942 output: ◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+App 3410942 output: DB Host: undefined
+App 3410942 output: DB User: undefined
+App 3410942 output: node:internal/modules/cjs/loader:1210
+App 3410942 output:   throw err;
+App 3410942 output:   ^
+App 3410942 output: Error: Cannot find module 'ws'
+App 3410942 output: Require stack:
+App 3410942 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3410942 output: - /home/rosettes/neuralstream.server/index.js
+App 3410942 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3410942 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3410942 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3410942 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3410942 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3410942 output:     at require (node:internal/modules/helpers:182:18)
+App 3410942 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3410942 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3410942 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3410942 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3410942 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3410942 output:   code: 'MODULE_NOT_FOUND',
+App 3410942 output:   requireStack: [
+App 3410942 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3410942 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3410942 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3410942 output:   ]
+App 3410942 output: }
+App 3410942 output: Node.js v20.20.2
+App 3414546 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3414546 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3414546 output: DB Host: undefined
+App 3414546 output: DB User: undefined
+App 3414546 output: node:internal/modules/cjs/loader:1210
+App 3414546 output:   throw err;
+App 3414546 output:   ^
+App 3414546 output: Error: Cannot find module 'ws'
+App 3414546 output: Require stack:
+App 3414546 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3414546 output: - /home/rosettes/neuralstream.server/index.js
+App 3414546 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3414546 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3414546 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3414546 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3414546 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3414546 output:     at require (node:internal/modules/helpers:182:18)
+App 3414546 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3414546 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3414546 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3414546 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3414546 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3414546 output:   code: 'MODULE_NOT_FOUND',
+App 3414546 output:   requireStack: [
+App 3414546 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3414546 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3414546 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3414546 output:   ]
+App 3414546 output: }
+App 3414546 output: Node.js v20.20.2
+App 3618169 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3618169 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3618169 output: DB Host: undefined
+App 3618169 output: DB User: undefined
+App 3618169 output: node:internal/modules/cjs/loader:1210
+App 3618169 output:   throw err;
+App 3618169 output:   ^
+App 3618169 output: Error: Cannot find module 'ws'
+App 3618169 output: Require stack:
+App 3618169 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3618169 output: - /home/rosettes/neuralstream.server/index.js
+App 3618169 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3618169 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3618169 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3618169 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3618169 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3618169 output:     at require (node:internal/modules/helpers:182:18)
+App 3618169 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3618169 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3618169 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3618169 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3618169 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3618169 output:   code: 'MODULE_NOT_FOUND',
+App 3618169 output:   requireStack: [
+App 3618169 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3618169 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3618169 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3618169 output:   ]
+App 3618169 output: }
+App 3618169 output: Node.js v20.20.2
+App 3622712 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3622712 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3622712 output: DB Host: undefined
+App 3622712 output: DB User: undefined
+App 3622712 output: node:internal/modules/cjs/loader:1210
+App 3622712 output:   throw err;
+App 3622712 output:   ^
+App 3622712 output: Error: Cannot find module 'ws'
+App 3622712 output: Require stack:
+App 3622712 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3622712 output: - /home/rosettes/neuralstream.server/index.js
+App 3622712 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3622712 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3622712 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3622712 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3622712 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3622712 output:     at require (node:internal/modules/helpers:182:18)
+App 3622712 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3622712 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3622712 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3622712 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3622712 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3622712 output:   code: 'MODULE_NOT_FOUND',
+App 3622712 output:   requireStack: [
+App 3622712 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3622712 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3622712 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3622712 output:   ]
+App 3622712 output: }
+App 3622712 output: Node.js v20.20.2
+App 3623010 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3623010 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3623010 output: DB Host: undefined
+App 3623010 output: DB User: undefined
+App 3623010 output: node:internal/modules/cjs/loader:1210
+App 3623010 output:   throw err;
+App 3623010 output:   ^
+App 3623010 output: Error: Cannot find module 'ws'
+App 3623010 output: Require stack:
+App 3623010 output: - /home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js
+App 3623010 output: - /home/rosettes/neuralstream.server/index.js
+App 3623010 output: - /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js
+App 3623010 output:     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+App 3623010 output:     at Module._load (node:internal/modules/cjs/loader:1038:27)
+App 3623010 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3623010 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3623010 output:     at require (node:internal/modules/helpers:182:18)
+App 3623010 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js:25:19)
+App 3623010 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3623010 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3623010 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3623010 output:     at Module._load (node:internal/modules/cjs/loader:1091:12) {
+App 3623010 output:   code: 'MODULE_NOT_FOUND',
+App 3623010 output:   requireStack: [
+App 3623010 output:     '/home/rosettes/neuralstream.server/src/mobile/websocket/websocket.js',
+App 3623010 output:     '/home/rosettes/neuralstream.server/index.js',
+App 3623010 output:     '/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js'
+App 3623010 output:   ]
+App 3623010 output: }
+App 3949266 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3949266 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3949266 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3949266 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3949266 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3949266 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3949266 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3949266 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3949266 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3949266 output:     at require (node:internal/modules/helpers:182:18)
+App 3949266 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3949266 output: Node.js v20.20.2
+App 3950689 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3950689 output: ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+App 3950689 output: DB Host: undefined
+App 3950689 output: DB User: undefined
+App 3950689 output: WebSocket Server Started
+App 3950689 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3950689 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3950689 output: 		^
+App 3950689 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3950689 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3950689 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3950689 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3950689 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3950689 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3950689 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3950689 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3950689 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3950689 output:     at require (node:internal/modules/helpers:182:18)
+App 3950689 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3950689 output: Node.js v20.20.2
+App 3958438 output: ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+App 3958438 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3958438 output: DB Host: localhost
+App 3958438 output: DB User: rosettes_neuralstream_user
+App 3958438 output: WebSocket Server Started
+App 3958438 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3958438 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3958438 output: 		^
+App 3958438 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3958438 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3958438 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3958438 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3958438 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3958438 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3958438 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3958438 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3958438 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3958438 output:     at require (node:internal/modules/helpers:182:18)
+App 3958438 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3958438 output: Node.js v20.20.2
+App 3969559 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3969559 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3969559 output: DB Host: localhost
+App 3969559 output: DB User: rosettes_neuralstream_user
+App 3969559 output: WebSocket Server Started
+App 3969559 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3969559 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3969559 output: 		^
+App 3969559 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3969559 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3969559 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3969559 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3969559 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3969559 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3969559 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3969559 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3969559 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3969559 output:     at require (node:internal/modules/helpers:182:18)
+App 3969559 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3969559 output: Node.js v20.20.2
+App 3970392 output: ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+App 3970392 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3970392 output: DB Host: localhost
+App 3970392 output: DB User: rosettes_neuralstream_user
+App 3970392 output: WebSocket Server Started
+App 3970392 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3970392 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3970392 output: 		^
+App 3970392 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3970392 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3970392 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3970392 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3970392 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3970392 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3970392 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3970392 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3970392 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3970392 output:     at require (node:internal/modules/helpers:182:18)
+App 3970392 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3970392 output: Node.js v20.20.2
+App 3971638 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3971638 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+App 3971638 output: DB Host: localhost
+App 3971638 output: DB User: rosettes_neuralstream_user
+App 3971638 output: WebSocket Server Started
+App 3971638 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3971638 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3971638 output: 		^
+App 3971638 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3971638 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3971638 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3971638 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3971638 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3971638 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3971638 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3971638 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3971638 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3971638 output:     at require (node:internal/modules/helpers:182:18)
+App 3971638 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3971638 output: Node.js v20.20.2
+App 3972538 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3972538 output: ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+App 3972538 output: DB Host: localhost
+App 3972538 output: DB User: rosettes_neuralstream_user
+App 3972538 output: WebSocket Server Started
+App 3972538 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339
+App 3972538 output: 		throw new Error("http.Server.listen() was called more than once, which " +
+App 3972538 output: 		^
+App 3972538 output: Error: http.Server.listen() was called more than once, which is not allowed because Phusion Passenger is in auto-install mode. This means that the first http.Server object for which listen() is called, is automatically installed as the Phusion Passenger request handler. If you want to create and listen on multiple http.Server object then you should disable auto-install mode. Please read http://stackoverflow.com/questions/20645231/phusion-passenger-error-http-server-listen-was-called-more-than-once/20645549
+App 3972538 output:     at Server.installServer [as listen] (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:339:9)
+App 3972538 output:     at Object.<anonymous> (/home/rosettes/neuralstream.server/index.js:85:10)
+App 3972538 output:     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+App 3972538 output:     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+App 3972538 output:     at Module.load (node:internal/modules/cjs/loader:1266:32)
+App 3972538 output:     at Module._load (node:internal/modules/cjs/loader:1091:12)
+App 3972538 output:     at Module.require (node:internal/modules/cjs/loader:1289:19)
+App 3972538 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3972538 output:     at require (node:internal/modules/helpers:182:18)
+App 3972538 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3972538 output: Node.js v20.20.2
+App 3986257 output: ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App 3986257 output: ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
