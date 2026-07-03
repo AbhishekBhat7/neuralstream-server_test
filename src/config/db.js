@@ -26,8 +26,8 @@ const pool = new Pool({
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000, 
 });
-console.log('DB Host:', process.env.POSTGRES_HOST);
-console.log('DB User:', process.env.POSTGRES_USER);
+console.log('DB Host:', process.env.DB_HOST);
+console.log('DB User:', process.env.DB_USER);
 pool
   .connect()
   .then(() => {

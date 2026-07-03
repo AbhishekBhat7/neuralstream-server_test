@@ -65,7 +65,7 @@ app.use("/api", authRoutes);
 app.use("/api", sessionRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Welcome to the NeuralStream API");
+    res.send("Welcome to the NeuralStream API1");
 });
 
 // Main HTTP server for Express (Passenger manages this)
