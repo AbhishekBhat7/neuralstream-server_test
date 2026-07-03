@@ -98,10 +98,10 @@
 
 
 
-if (!process.env.DB_HOST) {
-    require("dotenv").config();
-}
-
+// if (!process.env.DB_HOST) {
+//     require("dotenv").config();
+// }
+require("dotenv").config();
 console.log("DB Host:", process.env.DB_HOST);
 console.log("DB User:", process.env.DB_USER);
 
