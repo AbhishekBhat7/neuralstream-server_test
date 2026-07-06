@@ -1,179 +1,428 @@
 // const manager = require("../websocket/sessionManager");
-
-// const service = require("../services/websocketService");
+// const websocketService = require("../services/websocketService");
+// const sessionService = require("../services/sessionService");
 
 // const { verifyToken } = require("../utils/authJwt");
 
-// function handleConnection(ws) {
+// // async function handleConnection(ws) {
 
-//     ws.authenticated = false;
+// //     // -----------------------------
+// //     // Socket State
+// //     // -----------------------------
 
-//     ws.user = null;
+// //     ws.isAuthenticated = false;
+// //     ws.user = null;
+// //     ws.role = null;
+// //     ws.sessionId = null;
+// //     ws.deviceId = null;
+// //     ws.isAlive = true;
 
-//     ws.on("message", (data, isBinary) => {
+// //     ws.on("pong", () => {
+// //         ws.isAlive = true;
+// //     });
 
-//         //---------------------------------------
-//         // Binary telemetry
-//         //---------------------------------------
+// //     // -----------------------------
+// //     // Incoming Messages
+// //     // -----------------------------
 
-//         if (isBinary) {
+// //     ws.on("message", async (data, isBinary) => {
 
-//             if (!ws.authenticated)
-//                 return;
+// //         try {
 
-//             if (!ws.sessionId)
-//                 return;
+// //             //---------------------------------------
+// //             // Binary Telemetry
+// //             //---------------------------------------
 
-//             if (ws.role !== "host")
-//                 return;
+// //             if (isBinary) {
 
-//             service.broadcastBinary(
+// //                 if (
+// //                     !ws.isAuthenticated ||
+// //                     ws.role !== "host" ||
+// //                     !ws.sessionId
+// //                 ) {
+// //                     return;
+// //                 }
 
-//                 ws.sessionId,
+// //                 websocketService.broadcastBinary(
+// //                     ws.sessionId,
+// //                     data
+// //                 );
 
-//                 data
+// //                 return;
+// //             }
 
-//             );
+// //             //---------------------------------------
+// //             // Parse JSON
+// //             //---------------------------------------
 
-//             return;
-//         }
+// //             let message;
 
-//         //---------------------------------------
-//         // JSON messages
-//         //---------------------------------------
+// //             try {
 
-//         let message;
+// //                 message = JSON.parse(
+// //                     data.toString()
+// //                 );
 
-//         try {
+// //             } catch {
 
-//             message = JSON.parse(
-//                 data.toString()
-//             );
+// //                 ws.send(JSON.stringify({
+// //                     type: "error",
+// //                     message: "Invalid JSON"
+// //                 }));
 
-//         } catch {
+// //                 return;
+// //             }
 
-//             ws.close();
+// //             //---------------------------------------
+// //             // Authentication
+// //             //---------------------------------------
 
-//             return;
-//         }
+// //             if (message.type === "auth") {
 
-//         switch (message.type) {
+// //                 if (ws.isAuthenticated) {
 
-//             //-----------------------------------
-//             // Authenticate
-//             //-----------------------------------
+// //                     ws.send(JSON.stringify({
+// //                         type: "error",
+// //                         message: "Already authenticated"
+// //                     }));
 
-//             case "auth":
+// //                     return;
+// //                 }
 
-//                 const decoded = verifyToken(
-//                     message.token
-//                 );
+// //                 if (!message.token) {
 
-//                 if (!decoded) {
+// //                     ws.send(JSON.stringify({
+// //                         type: "error",
+// //                         message: "Token missing"
+// //                     }));
 
-//                     ws.send(JSON.stringify({
+// //                     return;
+// //                 }
 
-//                         type: "auth_failed"
+// //                 const decoded = verifyToken(
+// //                     message.token
+// //                 );
 
-//                     }));
+// //                 if (!decoded) {
 
-//                     ws.close();
+// //                     ws.send(JSON.stringify({
+// //                         type: "auth_failed"
+// //                     }));
 
-//                     return;
-//                 }
+// //                     ws.close();
 
-//                 ws.authenticated = true;
+// //                     return;
+// //                 }
 
-//                 ws.user = decoded;
+// //                 ws.isAuthenticated = true;
+// //                 ws.user = decoded;
 
-//                 ws.send(JSON.stringify({
+// //                 ws.send(JSON.stringify({
 
-//                     type: "auth_success"
+// //                     type: "auth_success",
 
-//                 }));
+// //                     userId: decoded.userId
 
-//                 break;
+// //                 }));
 
-//             //-----------------------------------
-//             // Host joins
-//             //-----------------------------------
+// //                 return;
+// //             }
 
-//             case "host":
+// //             //---------------------------------------
+// //             // Everything below requires auth
+// //             //---------------------------------------
 
-//                 if (!ws.authenticated)
-//                     return;
+// //             if (!ws.isAuthenticated) {
 
-//                 ws.role = "host";
+// //                 ws.send(JSON.stringify({
 
-//                 ws.sessionId = message.sessionId;
+// //                     type: "error",
 
-//                 manager.setHost(
+// //                     message: "Authenticate first"
 
-//                     message.sessionId,
+// //                 }));
 
-//                     ws
+// //                 return;
+// //             }
 
-//                 );
+// //             //---------------------------------------
+// //             // Host Join
+// //             //---------------------------------------
 
-//                 console.log(
-//                     `${ws.user.user_id} joined as HOST`
-//                 );
+// //             if (message.type === "host") {
 
-//                 break;
+// //                 if (
+// //                     !message.sessionId
+// //                 ) {
 
-//             //-----------------------------------
-//             // Viewer joins
-//             //-----------------------------------
+// //                     ws.send(JSON.stringify({
 
-//             case "viewer":
+// //                         type: "error",
 
-//                 if (!ws.authenticated)
-//                     return;
+// //                         message: "sessionId required"
 
-//                 ws.role = "viewer";
+// //                     }));
 
-//                 ws.sessionId = message.sessionId;
+// //                     return;
+// //                 }
 
-//                 manager.addViewer(
+// //                 const isValid =
+// //                     await sessionService.validateHost(
 
-//                     message.sessionId,
+// //                         message.sessionId,
 
-//                     ws
+// //                         ws.user.userId
 
-//                 );
+// //                     );
 
-//                 console.log(
-//                     `${ws.user.user_id} joined as VIEWER`
-//                 );
+// //                 if (!isValid) {
 
-//                 break;
+// //                     ws.send(JSON.stringify({
 
-//         }
+// //                         type: "error",
 
-//     });
+// //                         message:
+// //                             "Unauthorized host"
 
-//     ws.on("close", () => {
+// //                     }));
 
-//         manager.removeClient(ws);
+// //                     ws.close();
 
-//     });
+// //                     return;
+// //                 }
 
-// }
+// //                 ws.role = "host";
+// //                 ws.sessionId = message.sessionId;
 
-// module.exports = {
+// //                 manager.setHost(
 
-//     handleConnection
+// //                     message.sessionId,
 
-// };
+// //                     ws
 
+// //                 );
 
-const manager = require("../websocket/sessionManager");
-const websocketService = require("../services/websocketService");
-const sessionService = require("../services/sessionService");
+// //                 ws.send(JSON.stringify({
 
-const { verifyToken } = require("../utils/authJwt");
+// //                     type: "host_joined",
 
+// //                     sessionId: message.sessionId
+
+// //                 }));
+
+// //                 console.log(
+
+// //                     `[HOST CONNECTED] User ${ws.user.userId}`
+
+// //                 );
+
+// //                 return;
+
+// //             }
+
+// //             //---------------------------------------
+// //             // Viewer Join
+// //             //---------------------------------------
+
+// //             if (message.type === "viewer") {
+
+// //                 if (
+// //                     !message.sessionId ||
+// //                     !message.deviceId
+// //                 ) {
+
+// //                     ws.send(JSON.stringify({
+
+// //                         type: "error",
+
+// //                         message:
+// //                             "sessionId & deviceId required"
+
+// //                     }));
+
+// //                     return;
+// //                 }
+
+// //                 try {
+// //                     console.log("deviceId:", deviceId);
+// //                     console.log("userId:", userId);
+// //                     console.log("JWT:", ws.user);
+// //                     console.log("Message Device:", message.deviceId);   
+// //                     await sessionService.joinSession(
+
+// //                         message.sessionId,
+
+// //                         ws.user.userId,
+
+// //                         message.deviceId
+
+// //                     );
+
+// //                 } catch (err) {
+
+// //                     ws.send(JSON.stringify({
+
+// //                         type: "error",
+
+// //                         message: err.message
+
+// //                     }));
+
+// //                     return;
+
+// //                 }
+
+// //                 ws.role = "viewer";
+// //                 ws.sessionId = message.sessionId;
+// //                 ws.deviceId = message.deviceId;
+
+// //                 manager.addViewer(
+
+// //                     message.sessionId,
+
+// //                     ws
+
+// //                 );
+
+// //                 ws.send(JSON.stringify({
+
+// //                     type: "viewer_joined",
+
+// //                     sessionId: message.sessionId
+
+// //                 }));
+
+// //                 console.log(
+
+// //                     `[VIEWER CONNECTED] User ${ws.user.userId}`
+
+// //                 );
+
+// //                 return;
+
+// //             }
+
+// //             //---------------------------------------
+// //             // Unknown Message
+// //             //---------------------------------------
+
+// //             ws.send(JSON.stringify({
+
+// //                 type: "error",
+
+// //                 message: "Unknown message type"
+
+// //             }));
+
+// //         } catch (err) {
+
+// //             console.error(err);
+
+// //             ws.send(JSON.stringify({
+
+// //                 type: "error",
+
+// //                 message: "Internal Server Error"
+
+// //             }));
+
+// //         }
+
+// //     });
+
+// //     // -----------------------------
+// //     // Disconnect
+// //     // -----------------------------
+
+// //     ws.on("close", async () => {
+
+// //         try {
+
+// //             if (
+
+// //                 ws.role === "viewer" &&
+
+// //                 ws.sessionId &&
+
+// //                 ws.deviceId
+
+// //             ) {
+
+// //                 await sessionService.leaveSession(
+
+// //                     ws.sessionId,
+
+// //                     ws.user.userId,
+
+// //                     ws.deviceId
+
+// //                 );
+
+// //             }
+
+// //             if (
+
+// //                 ws.role === "host" &&
+
+// //                 ws.sessionId
+
+// //             ) {
+
+// //                 try {
+
+// //                     await sessionService.endSession(
+
+// //                         ws.sessionId,
+
+// //                         ws.user.userId
+
+// //                     );
+
+// //                 } catch (_) {}
+
+// //             }
+
+// //             manager.removeClient(ws);
+
+// //             console.log(
+
+// //                 `[DISCONNECTED] ${ws.user?.userId || "Unknown"}`
+
+// //             );
+
+// //         } catch (err) {
+
+// //             console.error(err);
+
+// //         }
+
+// //     });
+
+// //     // -----------------------------
+// //     // Errors
+// //     // -----------------------------
+
+// //     ws.on("error", (err) => {
+
+// //         console.error(
+
+// //             "WebSocket Error:",
+
+// //             err.message
+
+// //         );
+
+// //     });
+
+// // }
 // async function handleConnection(ws) {
+
+//     // Give every socket a unique ID
+//     ws.id = crypto.randomUUID();
+
+//     console.log("==================================");
+//     console.log("NEW CONNECTION:", ws.id);
+//     console.log("==================================");
 
 //     // -----------------------------
 //     // Socket State
@@ -195,6 +444,12 @@ const { verifyToken } = require("../utils/authJwt");
 //     // -----------------------------
 
 //     ws.on("message", async (data, isBinary) => {
+
+//         console.log("\n----------------------------------");
+//         console.log("Socket:", ws.id);
+//         console.log("Received:", data.toString());
+//         console.log("Authenticated:", ws.isAuthenticated);
+//         console.log("----------------------------------");
 
 //         try {
 
@@ -228,9 +483,7 @@ const { verifyToken } = require("../utils/authJwt");
 
 //             try {
 
-//                 message = JSON.parse(
-//                     data.toString()
-//                 );
+//                 message = JSON.parse(data.toString());
 
 //             } catch {
 
@@ -247,6 +500,8 @@ const { verifyToken } = require("../utils/authJwt");
 //             //---------------------------------------
 
 //             if (message.type === "auth") {
+
+//                 console.log("AUTH REQUEST");
 
 //                 if (ws.isAuthenticated) {
 
@@ -268,9 +523,9 @@ const { verifyToken } = require("../utils/authJwt");
 //                     return;
 //                 }
 
-//                 const decoded = verifyToken(
-//                     message.token
-//                 );
+//                 const decoded = verifyToken(message.token);
+
+//                 console.log("Decoded:", decoded);
 
 //                 if (!decoded) {
 
@@ -286,12 +541,14 @@ const { verifyToken } = require("../utils/authJwt");
 //                 ws.isAuthenticated = true;
 //                 ws.user = decoded;
 
+//                 console.log("AUTH SUCCESS");
+//                 console.log("Socket:", ws.id);
+//                 console.log("Authenticated:", ws.isAuthenticated);
+//                 console.log("User:", ws.user);
+
 //                 ws.send(JSON.stringify({
-
 //                     type: "auth_success",
-
 //                     userId: decoded.userId
-
 //                 }));
 
 //                 return;
@@ -301,14 +558,18 @@ const { verifyToken } = require("../utils/authJwt");
 //             // Everything below requires auth
 //             //---------------------------------------
 
+//             console.log("Before auth check");
+//             console.log("Socket:", ws.id);
+//             console.log("Authenticated:", ws.isAuthenticated);
+//             console.log("Message:", message.type);
+
 //             if (!ws.isAuthenticated) {
 
+//                 console.log("FAILED AUTH CHECK");
+
 //                 ws.send(JSON.stringify({
-
 //                     type: "error",
-
 //                     message: "Authenticate first"
-
 //                 }));
 
 //                 return;
@@ -320,39 +581,30 @@ const { verifyToken } = require("../utils/authJwt");
 
 //             if (message.type === "host") {
 
-//                 if (
-//                     !message.sessionId
-//                 ) {
+//                 console.log("HOST REQUEST");
+
+//                 if (!message.sessionId) {
 
 //                     ws.send(JSON.stringify({
-
 //                         type: "error",
-
 //                         message: "sessionId required"
-
 //                     }));
 
 //                     return;
 //                 }
 
-//                 const isValid =
-//                     await sessionService.validateHost(
+//                 const isValid = await sessionService.validateHost(
+//                     message.sessionId,
+//                     ws.user.userId
+//                 );
 
-//                         message.sessionId,
-
-//                         ws.user.userId
-
-//                     );
+//                 console.log("Host validation:", isValid);
 
 //                 if (!isValid) {
 
 //                     ws.send(JSON.stringify({
-
 //                         type: "error",
-
-//                         message:
-//                             "Unauthorized host"
-
+//                         message: "Unauthorized host"
 //                     }));
 
 //                     ws.close();
@@ -364,29 +616,18 @@ const { verifyToken } = require("../utils/authJwt");
 //                 ws.sessionId = message.sessionId;
 
 //                 manager.setHost(
-
 //                     message.sessionId,
-
 //                     ws
-
 //                 );
 
 //                 ws.send(JSON.stringify({
-
 //                     type: "host_joined",
-
 //                     sessionId: message.sessionId
-
 //                 }));
 
-//                 console.log(
-
-//                     `[HOST CONNECTED] User ${ws.user.userId}`
-
-//                 );
+//                 console.log("[HOST CONNECTED]", ws.user.userId);
 
 //                 return;
-
 //             }
 
 //             //---------------------------------------
@@ -395,92 +636,44 @@ const { verifyToken } = require("../utils/authJwt");
 
 //             if (message.type === "viewer") {
 
-//                 if (
-//                     !message.sessionId ||
-//                     !message.deviceId
-//                 ) {
+//                 if (!message.sessionId || !message.deviceId) {
 
 //                     ws.send(JSON.stringify({
-
 //                         type: "error",
-
-//                         message:
-//                             "sessionId & deviceId required"
-
+//                         message: "sessionId & deviceId required"
 //                     }));
 
 //                     return;
 //                 }
 
-//                 try {
-//                     console.log("deviceId:", deviceId);
-//                     console.log("userId:", userId);
-//                     console.log("JWT:", ws.user);
-//                     console.log("Message Device:", message.deviceId);   
-//                     await sessionService.joinSession(
+//                 console.log("Viewer:", message.deviceId);
 
-//                         message.sessionId,
-
-//                         ws.user.userId,
-
-//                         message.deviceId
-
-//                     );
-
-//                 } catch (err) {
-
-//                     ws.send(JSON.stringify({
-
-//                         type: "error",
-
-//                         message: err.message
-
-//                     }));
-
-//                     return;
-
-//                 }
+//                 await sessionService.joinSession(
+//                     message.sessionId,
+//                     ws.user.userId,
+//                     message.deviceId
+//                 );
 
 //                 ws.role = "viewer";
 //                 ws.sessionId = message.sessionId;
 //                 ws.deviceId = message.deviceId;
 
 //                 manager.addViewer(
-
 //                     message.sessionId,
-
 //                     ws
-
 //                 );
 
 //                 ws.send(JSON.stringify({
-
 //                     type: "viewer_joined",
-
 //                     sessionId: message.sessionId
-
 //                 }));
 
-//                 console.log(
-
-//                     `[VIEWER CONNECTED] User ${ws.user.userId}`
-
-//                 );
-
 //                 return;
-
 //             }
 
-//             //---------------------------------------
-//             // Unknown Message
-//             //---------------------------------------
-
 //             ws.send(JSON.stringify({
-
 //                 type: "error",
-
 //                 message: "Unknown message type"
-
 //             }));
 
 //         } catch (err) {
@@ -488,11 +681,8 @@ const { verifyToken } = require("../utils/authJwt");
 //             console.error(err);
 
 //             ws.send(JSON.stringify({
-
 //                 type: "error",
-
 //                 message: "Internal Server Error"
-
 //             }));
 
 //         }
@@ -503,131 +693,82 @@ const { verifyToken } = require("../utils/authJwt");
 //     // Disconnect
 //     // -----------------------------
 
-//     ws.on("close", async () => {
-
-//         try {
-
-//             if (
-
-//                 ws.role === "viewer" &&
-
-//                 ws.sessionId &&
-
-//                 ws.deviceId
-
-//             ) {
-
-//                 await sessionService.leaveSession(
-
-//                     ws.sessionId,
-
-//                     ws.user.userId,
-
-//                     ws.deviceId
-
-//                 );
-
-//             }
-
-//             if (
-
-//                 ws.role === "host" &&
-
-//                 ws.sessionId
-
-//             ) {
-
-//                 try {
-
-//                     await sessionService.endSession(
-
-//                         ws.sessionId,
-
-//                         ws.user.userId
-
-//                     );
-
-//                 } catch (_) {}
-
-//             }
-
-//             manager.removeClient(ws);
-
-//             console.log(
-
-//                 `[DISCONNECTED] ${ws.user?.userId || "Unknown"}`
-
-//             );
-
-//         } catch (err) {
-
-//             console.error(err);
-
-//         }
-
+//     ws.on("close", () => {
+//         console.log("Socket closed:", ws.id);
 //     });
 
-//     // -----------------------------
-//     // Errors
-//     // -----------------------------
-
 //     ws.on("error", (err) => {
-
-//         console.error(
-
-//             "WebSocket Error:",
-
-//             err.message
-
-//         );
-
+//         console.log("Socket error:", ws.id, err.message);
 //     });
 
 // }
-async function handleConnection(ws) {
 
+// module.exports = {
+
+//     handleConnection
+
+// };
+
+
+const manager = require("../websocket/sessionManager");
+const websocketService = require("../services/websocketService");
+const sessionService = require("../services/sessionService");
+const { verifyToken } = require("../utils/authJwt");
+
+async function handleConnection(ws, request) {
+
+    // ----------------------------------------
     // Give every socket a unique ID
+    // ----------------------------------------
     ws.id = crypto.randomUUID();
 
     console.log("==================================");
     console.log("NEW CONNECTION:", ws.id);
     console.log("==================================");
 
-    // -----------------------------
+    // ----------------------------------------
     // Socket State
-    // -----------------------------
-
+    // NOTE: isAlive is already set in websocket.js
+    // DO NOT set it again here
+    // DO NOT add pong listener here - already in websocket.js
+    // ----------------------------------------
     ws.isAuthenticated = false;
     ws.user = null;
     ws.role = null;
     ws.sessionId = null;
     ws.deviceId = null;
-    ws.isAlive = true;
 
-    ws.on("pong", () => {
-        ws.isAlive = true;
-    });
+    // ----------------------------------------
+    // Auth timeout - close if not authenticated
+    // within 10 seconds of connecting
+    // ----------------------------------------
+    const authTimeout = setTimeout(() => {
+        if (!ws.isAuthenticated) {
+            console.log(`Auth timeout - closing socket: ${ws.id}`);
+            ws.close(1008, "Authentication timeout");
+        }
+    }, 10000);
 
-    // -----------------------------
+    // ----------------------------------------
     // Incoming Messages
-    // -----------------------------
-
+    // ----------------------------------------
     ws.on("message", async (data, isBinary) => {
+
+        // Reset alive on ANY message
+        ws.isAlive = true;
 
         console.log("\n----------------------------------");
         console.log("Socket:", ws.id);
-        console.log("Received:", data.toString());
+        console.log("Received:", data.toString().substring(0, 200));
         console.log("Authenticated:", ws.isAuthenticated);
         console.log("----------------------------------");
 
         try {
 
-            //---------------------------------------
+            // ----------------------------------------
             // Binary Telemetry
-            //---------------------------------------
-
+            // ----------------------------------------
             if (isBinary) {
-
                 if (
                     !ws.isAuthenticated ||
                     ws.role !== "host" ||
@@ -636,84 +777,67 @@ async function handleConnection(ws) {
                     return;
                 }
 
-                websocketService.broadcastBinary(
-                    ws.sessionId,
-                    data
-                );
-
+                websocketService.broadcastBinary(ws.sessionId, data);
                 return;
             }
 
-            //---------------------------------------
+            // ----------------------------------------
             // Parse JSON
-            //---------------------------------------
-
+            // ----------------------------------------
             let message;
 
             try {
-
                 message = JSON.parse(data.toString());
-
             } catch {
-
                 ws.send(JSON.stringify({
                     type: "error",
                     message: "Invalid JSON"
                 }));
-
                 return;
             }
 
-            //---------------------------------------
+            // ----------------------------------------
             // Authentication
-            //---------------------------------------
-
+            // ----------------------------------------
             if (message.type === "auth") {
 
-                console.log("AUTH REQUEST");
+                console.log("AUTH REQUEST - Socket:", ws.id);
+
+                // Clear auth timeout since they are trying to auth
+                clearTimeout(authTimeout);
 
                 if (ws.isAuthenticated) {
-
                     ws.send(JSON.stringify({
                         type: "error",
                         message: "Already authenticated"
                     }));
-
                     return;
                 }
 
                 if (!message.token) {
-
                     ws.send(JSON.stringify({
                         type: "error",
                         message: "Token missing"
                     }));
-
                     return;
                 }
 
                 const decoded = verifyToken(message.token);
-
-                console.log("Decoded:", decoded);
+                console.log("Token decoded:", decoded ? "success" : "failed");
 
                 if (!decoded) {
-
                     ws.send(JSON.stringify({
-                        type: "auth_failed"
+                        type: "auth_failed",
+                        message: "Invalid or expired token"
                     }));
-
-                    ws.close();
-
+                    ws.close(1008, "Authentication failed");
                     return;
                 }
 
                 ws.isAuthenticated = true;
                 ws.user = decoded;
 
-                console.log("AUTH SUCCESS");
-                console.log("Socket:", ws.id);
-                console.log("Authenticated:", ws.isAuthenticated);
-                console.log("User:", ws.user);
+                console.log("AUTH SUCCESS - Socket:", ws.id, "User:", decoded.userId);
 
                 ws.send(JSON.stringify({
                     type: "auth_success",
@@ -723,42 +847,30 @@ async function handleConnection(ws) {
                 return;
             }
 
-            //---------------------------------------
+            // ----------------------------------------
             // Everything below requires auth
-            //---------------------------------------
-
-            console.log("Before auth check");
-            console.log("Socket:", ws.id);
-            console.log("Authenticated:", ws.isAuthenticated);
-            console.log("Message:", message.type);
-
+            // ----------------------------------------
             if (!ws.isAuthenticated) {
-
-                console.log("FAILED AUTH CHECK");
-
+                console.log("UNAUTHENTICATED REQUEST - Socket:", ws.id);
                 ws.send(JSON.stringify({
                     type: "error",
                     message: "Authenticate first"
                 }));
-
                 return;
             }
 
-            //---------------------------------------
+            // ----------------------------------------
             // Host Join
-            //---------------------------------------
-
+            // ----------------------------------------
             if (message.type === "host") {
 
-                console.log("HOST REQUEST");
+                console.log("HOST REQUEST - Socket:", ws.id);
 
                 if (!message.sessionId) {
-
                     ws.send(JSON.stringify({
                         type: "error",
                         message: "sessionId required"
                     }));
-
                     return;
                 }
 
@@ -770,110 +882,136 @@ async function handleConnection(ws) {
                 console.log("Host validation:", isValid);
 
                 if (!isValid) {
-
                     ws.send(JSON.stringify({
                         type: "error",
                         message: "Unauthorized host"
                     }));
-
-                    ws.close();
-
+                    ws.close(1008, "Unauthorized");
                     return;
                 }
 
                 ws.role = "host";
                 ws.sessionId = message.sessionId;
 
-                manager.setHost(
-                    message.sessionId,
-                    ws
-                );
+                manager.setHost(message.sessionId, ws);
 
                 ws.send(JSON.stringify({
                     type: "host_joined",
                     sessionId: message.sessionId
                 }));
 
-                console.log("[HOST CONNECTED]", ws.user.userId);
-
+                console.log("[HOST CONNECTED] User:", ws.user.userId, "Session:", message.sessionId);
                 return;
             }
 
-            //---------------------------------------
+            // ----------------------------------------
             // Viewer Join
-            //---------------------------------------
-
+            // ----------------------------------------
             if (message.type === "viewer") {
 
-                if (!message.sessionId || !message.deviceId) {
+                console.log("VIEWER REQUEST - Socket:", ws.id);
 
+                if (!message.sessionId || !message.deviceId) {
                     ws.send(JSON.stringify({
                         type: "error",
                         message: "sessionId & deviceId required"
                     }));
-
                     return;
                 }
 
-                console.log("Viewer:", message.deviceId);
-
-                await sessionService.joinSession(
-                    message.sessionId,
-                    ws.user.userId,
-                    message.deviceId
-                );
+                try {
+                    await sessionService.joinSession(
+                        message.sessionId,
+                        ws.user.userId,
+                        message.deviceId
+                    );
+                } catch (err) {
+                    console.error("Join session error:", err.message);
+                    ws.send(JSON.stringify({
+                        type: "error",
+                        message: err.message
+                    }));
+                    return;
+                }
 
                 ws.role = "viewer";
                 ws.sessionId = message.sessionId;
                 ws.deviceId = message.deviceId;
 
-                manager.addViewer(
-                    message.sessionId,
-                    ws
-                );
+                manager.addViewer(message.sessionId, ws);
 
                 ws.send(JSON.stringify({
                     type: "viewer_joined",
                     sessionId: message.sessionId
                 }));
 
+                console.log("[VIEWER CONNECTED] User:", ws.user.userId, "Device:", message.deviceId);
                 return;
             }
 
+            // ----------------------------------------
+            // Unknown Message Type
+            // ----------------------------------------
             ws.send(JSON.stringify({
                 type: "error",
-                message: "Unknown message type"
+                message: `Unknown message type: ${message.type}`
             }));
 
         } catch (err) {
-
-            console.error(err);
+            console.error("Message handler error:", err.message);
+            console.error(err.stack);
 
             ws.send(JSON.stringify({
                 type: "error",
                 message: "Internal Server Error"
             }));
-
         }
-
     });
 
-    // -----------------------------
-    // Disconnect
-    // -----------------------------
+    // ----------------------------------------
+    // Disconnect - Cleanup
+    // ----------------------------------------
+    ws.on("close", async (code, reason) => {
+        console.log(`Socket closed: ${ws.id} Code: ${code}`);
 
-    ws.on("close", () => {
-        console.log("Socket closed:", ws.id);
+        // Clear auth timeout if still pending
+        clearTimeout(authTimeout);
+
+        try {
+            if (ws.role === "viewer" && ws.sessionId && ws.deviceId) {
+                await sessionService.leaveSession(
+                    ws.sessionId,
+                    ws.user.userId,
+                    ws.deviceId
+                );
+                console.log("[VIEWER LEFT] User:", ws.user?.userId);
+            }
+
+            if (ws.role === "host" && ws.sessionId) {
+                try {
+                    await sessionService.endSession(
+                        ws.sessionId,
+                        ws.user.userId
+                    );
+                    console.log("[HOST LEFT] User:", ws.user?.userId);
+                } catch (_) {}
+            }
+
+            manager.removeClient(ws);
+
+        } catch (err) {
+            console.error("Cleanup error:", err.message);
+        }
     });
 
+    // ----------------------------------------
+    // Socket Errors
+    // ----------------------------------------
     ws.on("error", (err) => {
-        console.log("Socket error:", ws.id, err.message);
+        console.error(`Socket error [${ws.id}]:`, err.message);
     });
-
 }
 
 module.exports = {
-
     handleConnection
-
 };
