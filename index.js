@@ -344,7 +344,6 @@ app.get("/test", (req, res) => {
         db_host: process.env.DB_HOST,
         node_env: process.env.NODE_ENV,
         passenger: process.env.PASSENGER_APP_ENV || "not set",
-        spawn_dir: process.env.PASSENGER_SPAWN_WORK_DIR || "not set",
         timestamp: new Date().toISOString()
     });
 });
@@ -382,6 +381,27 @@ app.use((err, req, res, next) => {
 const server = http.createServer(app);
 
 // ============================================
+// PASSENGER FEEDBACK - Tell Passenger we are ready
+// ============================================
+function notifyPassengerReady() {
+    // PASSENGER_USE_FEEDBACK_FD is the file descriptor
+    // Passenger listens on this to know app is ready
+    const feedbackFd = process.env.PASSENGER_USE_FEEDBACK_FD;
+    
+    if (feedbackFd) {
+        try {
+            // Write a single byte "!" to tell Passenger we are ready
+            const fd = parseInt(feedbackFd);
+            const buf = Buffer.from("!");
+            fs.writeSync(fd, buf, 0, buf.length);
+            console.log("✓ Passenger notified - app is ready");
+        } catch (e) {
+            console.log("Could not notify Passenger:", e.message);
+        }
+    }
+}
+
+// ============================================
 // START SERVER
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
@@ -400,48 +420,46 @@ if (process.env.PASSENGER_APP_ENV) {
 
         // Listen on Unix socket
         server.listen(socketPath, () => {
-            console.log(`Server listening on socket: ${socketPath}`);
-
-            // Wait a moment for socket file to be created
-            // then chmod - socket must be readable by Passenger
-            setTimeout(() => {
-                try {
-                    if (fs.existsSync(socketPath)) {
-                        fs.chmodSync(socketPath, "777");
-                        console.log("✓ Socket permissions set successfully");
-                    } else {
-                        console.log("Socket file not found after listen, trying parent dir chmod...");
-                        
-                        // Try chmod on the directory instead
-                        fs.chmodSync(spawnWorkDir, "777");
-                        console.log("✓ Spawn work dir permissions set");
-                    }
-                } catch (e) {
-                    console.log("chmod warning (may not be needed):", e.message);
-                    // Not a fatal error - Passenger may handle permissions itself
-                }
-            }, 500); // wait 500ms for socket to be ready
+            console.log(`✓ Server listening on socket`);
+            
+            // Notify Passenger the app is ready to receive requests
+            notifyPassengerReady();
         });
 
         // Handle server errors
         server.on("error", (err) => {
             console.error("Server error:", err.message);
             console.error("Error code:", err.code);
-            
+
             if (err.code === "EADDRINUSE") {
-                console.log("Socket already in use, trying to remove and retry...");
+                console.log("Socket in use, removing and retrying...");
                 try {
                     fs.unlinkSync(socketPath);
-                    console.log("Old socket removed, restarting...");
                     server.listen(socketPath);
                 } catch (unlinkErr) {
                     console.error("Could not remove socket:", unlinkErr.message);
                 }
             }
+
+            if (err.code === "ENOENT") {
+                console.log("Socket directory not found");
+                console.log("Spawn work dir:", spawnWorkDir);
+                console.log("Trying to create directory...");
+                try {
+                    fs.mkdirSync(spawnWorkDir, { recursive: true });
+                    console.log("Directory created, retrying listen...");
+                    server.listen(socketPath, () => {
+                        console.log("✓ Server listening on socket after mkdir");
+                        notifyPassengerReady();
+                    });
+                } catch (mkdirErr) {
+                    console.error("Could not create directory:", mkdirErr.message);
+                }
+            }
         });
 
     } else {
-        console.log("PASSENGER_SPAWN_WORK_DIR not found - exporting app");
+        console.log("No PASSENGER_SPAWN_WORK_DIR - exporting app");
         initializeWebSocket(server);
         module.exports = app;
     }
@@ -455,8 +473,8 @@ if (process.env.PASSENGER_APP_ENV) {
     initializeWebSocket(server);
 
     server.listen(PORT, () => {
-        console.log(`Server Started on port ${PORT}`);
-        console.log(`HTTP: http://localhost:${PORT}`);
+        console.log(`✓ Server Started on port ${PORT}`);
+        console.log(`HTTP:      http://localhost:${PORT}`);
         console.log(`WebSocket: ws://localhost:${PORT}/ws`);
     });
 
