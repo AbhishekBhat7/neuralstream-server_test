@@ -101,9 +101,90 @@
 // if (!process.env.DB_HOST) {
 //     require("dotenv").config();
 // }
+// require("dotenv").config();
+// console.log("DB Host:", process.env.DB_HOST);
+// console.log("DB User:", process.env.DB_USER);
+
+// const express = require("express");
+// const http = require("http");
+
+// const authRoutes = require("./src/mobile/routes/authRoute");
+// const sessionRoutes = require("./src/mobile/routes/sessionRoute");
+// const initializeWebSocket = require("./src/mobile/websocket/websocket");
+
+// const app = express();
+// app.use(express.json());
+// app.use("/api", authRoutes);
+// app.use("/api", sessionRoutes);
+
+// app.get("/", (req, res) => {
+//     res.send("Welcome to the NeuralStream API");
+// });
+// app.get("/test", (req, res) => {
+//     res.json({ 
+//         status: "ok",
+//         db_host: process.env.DB_HOST,
+//         db_user: process.env.DB_USER,
+//         node_env: process.env.NODE_ENV
+//     });
+// });
+// // ONE single HTTP server for both Express and WebSocket
+// const server = http.createServer(app);
+
+// // Attach WebSocket to the SAME server (shares port with Express)
+// initializeWebSocket(server);
+
+// // ============================================
+// // CRITICAL FIX:
+// // Only call listen() when running locally
+// // Passenger calls listen() automatically on shared hosting
+// // ============================================
+// if (!process.env.PASSENGER_APP_ENV) {
+//     // Local development: node index.js
+//     const PORT = process.env.PORT || 3000;
+//     server.listen(PORT, () => {
+//         console.log(`Server Started on ${PORT}`);
+//         console.log(`WebSocket available at ws://localhost:${PORT}/ws`);
+//     });
+// } else {
+//     // A2 Hosting / Passenger - no listen() needed
+//     console.log("Server Started via Passenger");
+//     console.log("WebSocket available at wss://yourdomain.com/ws");
+// }
+
+// app.use((req, res, next) => {
+//     res.status(404).json({ 
+//         error: "Route not found",
+//         path: req.path,
+//         method: req.method
+//     });
+// });
+
+// // Handle ALL errors - shows real error in response
+// app.use((err, req, res, next) => {
+//     console.error("=== SERVER ERROR ===");
+//     console.error("Path:", req.path);
+//     console.error("Error:", err.message);
+//     console.error("Stack:", err.stack);
+//     console.error("===================");
+    
+//     res.status(500).json({
+//         error: err.message,
+//         path: req.path
+//     });
+// });
+
+// module.exports = server;
+
+
+
+
+
+
+
+
+
 require("dotenv").config();
-console.log("DB Host:", process.env.DB_HOST);
-console.log("DB User:", process.env.DB_USER);
 
 const express = require("express");
 const http = require("http");
@@ -113,65 +194,96 @@ const sessionRoutes = require("./src/mobile/routes/sessionRoute");
 const initializeWebSocket = require("./src/mobile/websocket/websocket");
 
 const app = express();
+
+// ============================================
+// MIDDLEWARE
+// ============================================
 app.use(express.json());
+
+// ============================================
+// ROUTES
+// ============================================
 app.use("/api", authRoutes);
 app.use("/api", sessionRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome to the NeuralStream API");
 });
+
 app.get("/test", (req, res) => {
-    res.json({ 
+    res.json({
         status: "ok",
         db_host: process.env.DB_HOST,
         db_user: process.env.DB_USER,
-        node_env: process.env.NODE_ENV
+        node_env: process.env.NODE_ENV,
+        passenger: process.env.PASSENGER_APP_ENV || "not set"
     });
 });
-// ONE single HTTP server for both Express and WebSocket
-const server = http.createServer(app);
-
-// Attach WebSocket to the SAME server (shares port with Express)
-initializeWebSocket(server);
 
 // ============================================
-// CRITICAL FIX:
-// Only call listen() when running locally
-// Passenger calls listen() automatically on shared hosting
+// 404 Handler (MUST be before error handler)
 // ============================================
-if (!process.env.PASSENGER_APP_ENV) {
-    // Local development: node index.js
-    const PORT = process.env.PORT || 3000;
-    server.listen(PORT, () => {
-        console.log(`Server Started on ${PORT}`);
-        console.log(`WebSocket available at ws://localhost:${PORT}/ws`);
-    });
-} else {
-    // A2 Hosting / Passenger - no listen() needed
-    console.log("Server Started via Passenger");
-    console.log("WebSocket available at wss://yourdomain.com/ws");
-}
-
 app.use((req, res, next) => {
-    res.status(404).json({ 
+    res.status(404).json({
         error: "Route not found",
         path: req.path,
         method: req.method
     });
 });
 
-// Handle ALL errors - shows real error in response
+// ============================================
+// Global Error Handler
+// ============================================
 app.use((err, req, res, next) => {
     console.error("=== SERVER ERROR ===");
     console.error("Path:", req.path);
     console.error("Error:", err.message);
     console.error("Stack:", err.stack);
     console.error("===================");
-    
+
     res.status(500).json({
         error: err.message,
         path: req.path
     });
 });
 
-module.exports = server;
+// ============================================
+// CREATE SERVER
+// ============================================
+const server = http.createServer(app);
+
+// Attach WebSocket to same server
+initializeWebSocket(server);
+
+// ============================================
+// START SERVER
+// ============================================
+if (process.env.PASSENGER_APP_ENV) {
+    // ----------------------------------------
+    // A2 Hosting / Passenger Environment
+    // Passenger manages the port/listen call
+    // We MUST export the server or app
+    // ----------------------------------------
+    console.log("Running under Passenger");
+    console.log("DB Host:", process.env.DB_HOST);
+    console.log("DB User:", process.env.DB_USER);
+    
+    // Passenger needs this - export the http.Server object
+    module.exports = server;
+
+} else {
+    // ----------------------------------------
+    // Local Development
+    // ----------------------------------------
+    const PORT = process.env.PORT || 3000;
+    
+    server.listen(PORT, () => {
+        console.log(`Server Started on port ${PORT}`);
+        console.log(`HTTP: http://localhost:${PORT}`);
+        console.log(`WebSocket: ws://localhost:${PORT}/ws`);
+        console.log("DB Host:", process.env.DB_HOST);
+        console.log("DB User:", process.env.DB_USER);
+    });
+
+    module.exports = server;
+}
