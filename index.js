@@ -314,6 +314,8 @@ require("dotenv").config();
 
 const express = require("express");
 const http = require("http");
+const path = require("path");
+const fs = require("fs");
 
 const authRoutes = require("./src/mobile/routes/authRoute");
 const sessionRoutes = require("./src/mobile/routes/sessionRoute");
@@ -388,10 +390,6 @@ if (process.env.PASSENGER_APP_ENV) {
     const spawnWorkDir = process.env.PASSENGER_SPAWN_WORK_DIR;
 
     if (spawnWorkDir) {
-        const path = require("path");
-        const fs = require("fs");
-
-        // Passenger socket file is always at this location
         const socketPath = path.join(spawnWorkDir, "stdin.socket");
 
         console.log("Spawn Work Dir:", spawnWorkDir);
@@ -400,24 +398,50 @@ if (process.env.PASSENGER_APP_ENV) {
         // Attach WebSocket BEFORE listen
         initializeWebSocket(server);
 
-        // Listen on the Unix socket file
+        // Listen on Unix socket
         server.listen(socketPath, () => {
             console.log(`Server listening on socket: ${socketPath}`);
 
-            // CRITICAL: Passenger needs socket to be world-readable
-            try {
-                fs.chmodSync(socketPath, "777");
-                console.log("Socket permissions set to 777");
-            } catch (e) {
-                console.log("Could not chmod socket:", e.message);
+            // Wait a moment for socket file to be created
+            // then chmod - socket must be readable by Passenger
+            setTimeout(() => {
+                try {
+                    if (fs.existsSync(socketPath)) {
+                        fs.chmodSync(socketPath, "777");
+                        console.log("✓ Socket permissions set successfully");
+                    } else {
+                        console.log("Socket file not found after listen, trying parent dir chmod...");
+                        
+                        // Try chmod on the directory instead
+                        fs.chmodSync(spawnWorkDir, "777");
+                        console.log("✓ Spawn work dir permissions set");
+                    }
+                } catch (e) {
+                    console.log("chmod warning (may not be needed):", e.message);
+                    // Not a fatal error - Passenger may handle permissions itself
+                }
+            }, 500); // wait 500ms for socket to be ready
+        });
+
+        // Handle server errors
+        server.on("error", (err) => {
+            console.error("Server error:", err.message);
+            console.error("Error code:", err.code);
+            
+            if (err.code === "EADDRINUSE") {
+                console.log("Socket already in use, trying to remove and retry...");
+                try {
+                    fs.unlinkSync(socketPath);
+                    console.log("Old socket removed, restarting...");
+                    server.listen(socketPath);
+                } catch (unlinkErr) {
+                    console.error("Could not remove socket:", unlinkErr.message);
+                }
             }
         });
 
     } else {
-        console.log("PASSENGER_SPAWN_WORK_DIR not found!");
-        console.log("Falling back to exporting app...");
-
-        // Last resort fallback
+        console.log("PASSENGER_SPAWN_WORK_DIR not found - exporting app");
         initializeWebSocket(server);
         module.exports = app;
     }
