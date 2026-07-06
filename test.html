@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #log { 
+            background: #1a1a1a; 
+            color: #00ff00; 
+            padding: 15px; 
+            height: 300px; 
+            overflow-y: auto;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px;
+            cursor: pointer;
+        }
+        input { 
+            padding: 10px; 
+            width: 300px; 
+        }
+        .connected { color: #00ff00; }
+        .disconnected { color: #ff4444; }
+        .message { color: #ffffff; }
+        .error { color: #ff8800; }
+    </style>
+</head>
+<body>
+    <h2>WebSocket Test</h2>
+    
+    <div>
+        <button onclick="connect()">Connect</button>
+        <button onclick="disconnect()">Disconnect</button>
+        <span id="status">Disconnected</span>
+    </div>
+    
+    <br>
+    
+    <div>
+        <input type="text" id="message" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    
+    <br>
+    
+    <div id="log"></div>
+    
+    <script>
+        let ws = null;
+        const URL = "wss://neuralstream.server.nimvoltlabs.in/ws";
+
+        function log(msg, type = "message") {
+            const div = document.getElementById("log");
+            const time = new Date().toLocaleTimeString();
+            div.innerHTML += `<div class="${type}">[${time}] ${msg}</div>`;
+            div.scrollTop = div.scrollHeight;
+        }
+
+        function connect() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                log("Already connected!", "error");
+                return;
+            }
+
+            log(`Connecting to ${URL}...`);
+            ws = new WebSocket(URL);
+
+            ws.onopen = () => {
+                log("✓ Connected successfully!", "connected");
+                document.getElementById("status").textContent = "Connected ✓";
+                document.getElementById("status").style.color = "green";
+            };
+
+            ws.onmessage = (event) => {
+                log(`Received: ${event.data}`);
+            };
+
+            ws.onerror = (error) => {
+                log(`Error: ${JSON.stringify(error)}`, "error");
+            };
+
+            ws.onclose = (event) => {
+                log(
+                    `Disconnected - Code: ${event.code}, Reason: ${event.reason || "none"}`,
+                    "disconnected"
+                );
+                document.getElementById("status").textContent = "Disconnected";
+                document.getElementById("status").style.color = "red";
+            };
+        }
+
+        function disconnect() {
+            if (ws) {
+                ws.close(1000, "User disconnected");
+                ws = null;
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("message");
+            const msg = input.value.trim();
+
+            if (!msg) return;
+
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                log("Not connected!", "error");
+                return;
+            }
+
+            ws.send(JSON.stringify({ 
+                type: "message", 
+                content: msg,
+                timestamp: new Date().toISOString()
+            }));
+
+            log(`Sent: ${msg}`);
+            input.value = "";
+        }
+
+        // Allow Enter key to send
+        document.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>
