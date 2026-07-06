@@ -210,71 +210,88 @@ app.use((err, req, res, next) => {
 });
 
 // ============================================
-// CREATE SINGLE SERVER
-// Both HTTP and WebSocket on same server
-// This is required for Passenger
+// CREATE SERVERS
 // ============================================
-const server = http.createServer(app);
-
-// Attach WebSocket to same server BEFORE listen
-// This way only ONE listen() call is made
-initializeWebSocket(server);
+const httpServer = http.createServer(app);
+const wsServer = http.createServer();
 
 // ============================================
-// START SERVER
+// START
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
-    // ----------------------------------------
-    // Passenger Environment
-    // CRITICAL: Only ONE listen() call allowed
-    // ----------------------------------------
     console.log("Running under Passenger");
 
     const spawnWorkDir = process.env.PASSENGER_SPAWN_WORK_DIR;
+    const WS_PORT = parseInt(process.env.WS_PORT) || 3001;
 
+    // ----------------------------------------
+    // WebSocket on separate port
+    // Bypasses Apache completely
+    // ----------------------------------------
+    initializeWebSocket(wsServer);
+
+    wsServer.listen(WS_PORT, "0.0.0.0", () => {
+        console.log(`✓ WebSocket listening on port ${WS_PORT}`);
+        console.log(`  Connect via: wss://neuralstream.server.nimvoltlabs.in:${WS_PORT}/ws`);
+    });
+
+    wsServer.on("error", (err) => {
+        console.error("WebSocket server error:", err.code, err.message);
+        
+        // Try next port if in use
+        if (err.code === "EADDRINUSE") {
+            const nextPort = WS_PORT + 1;
+            console.log(`Port ${WS_PORT} in use, trying ${nextPort}`);
+            wsServer.listen(nextPort, "0.0.0.0", () => {
+                console.log(`✓ WebSocket listening on fallback port ${nextPort}`);
+            });
+        }
+    });
+
+    // ----------------------------------------
+    // HTTP on Passenger socket
+    // ----------------------------------------
     if (spawnWorkDir) {
         const socketPath = path.join(spawnWorkDir, "stdin.socket");
         console.log("Socket Path:", socketPath);
 
-        // ONE listen() call - handles both HTTP and WebSocket
-        server.listen(socketPath, () => {
-            console.log("✓ Server ready - HTTP and WebSocket on same socket");
+        httpServer.listen(socketPath, () => {
+            console.log("✓ HTTP Server ready on Passenger socket");
         });
 
-        server.on("error", (err) => {
-            console.error("Server error:", err.code, err.message);
+        httpServer.on("error", (err) => {
+            console.error("HTTP server error:", err.code, err.message);
 
             if (err.code === "EADDRINUSE") {
                 try {
                     fs.unlinkSync(socketPath);
-                    server.listen(socketPath, () => {
-                        console.log("✓ Server ready after socket cleanup");
+                    httpServer.listen(socketPath, () => {
+                        console.log("✓ HTTP Server ready after cleanup");
                     });
                 } catch (e) {
-                    console.error("Could not clean socket:", e.message);
+                    console.error("Socket cleanup error:", e.message);
                 }
             }
         });
 
     } else {
-        // No spawn work dir - export for Passenger auto mode
-        console.log("No PASSENGER_SPAWN_WORK_DIR - using Passenger auto mode");
-        // Passenger will call listen() itself on this server
-        // WebSocket is already attached above
-        module.exports = server;
+        console.log("No PASSENGER_SPAWN_WORK_DIR - exporting app");
+        module.exports = app;
     }
 
 } else {
     // ----------------------------------------
-    // Local Development
+    // Local Development - single server
     // ----------------------------------------
     const PORT = process.env.PORT || 3000;
 
-    server.listen(PORT, () => {
-        console.log(`✓ Server Started on port ${PORT}`);
-        console.log(`   HTTP:      http://localhost:${PORT}`);
-        console.log(`   WebSocket: ws://localhost:${PORT}/ws`);
+    initializeWebSocket(httpServer);
+
+    httpServer.listen(PORT, () => {
+        console.log(`✓ Server on port ${PORT}`);
+        console.log(`  HTTP:      http://localhost:${PORT}`);
+        console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
     });
 
-    module.exports = server;
+    module.exports = httpServer;
 }
