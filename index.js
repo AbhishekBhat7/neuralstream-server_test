@@ -203,7 +203,6 @@ app.use((err, req, res, next) => {
     console.error("=== SERVER ERROR ===");
     console.error("Error:", err.message);
     console.error("Stack:", err.stack);
-
     res.status(500).json({
         error: err.message,
         path: req.path
@@ -211,21 +210,24 @@ app.use((err, req, res, next) => {
 });
 
 // ============================================
-// CREATE SERVERS
+// CREATE SINGLE SERVER
+// Both HTTP and WebSocket on same server
+// This is required for Passenger
 // ============================================
-
-// Main HTTP server for Passenger (Express only)
 const server = http.createServer(app);
 
-// Separate HTTP server for WebSocket only
-// This bypasses Apache/Passenger completely
-const wsHttpServer = http.createServer();
-const WS_PORT = process.env.WS_PORT || 8080;
+// Attach WebSocket to same server BEFORE listen
+// This way only ONE listen() call is made
+initializeWebSocket(server);
 
 // ============================================
-// START SERVERS
+// START SERVER
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
+    // ----------------------------------------
+    // Passenger Environment
+    // CRITICAL: Only ONE listen() call allowed
+    // ----------------------------------------
     console.log("Running under Passenger");
 
     const spawnWorkDir = process.env.PASSENGER_SPAWN_WORK_DIR;
@@ -234,27 +236,19 @@ if (process.env.PASSENGER_APP_ENV) {
         const socketPath = path.join(spawnWorkDir, "stdin.socket");
         console.log("Socket Path:", socketPath);
 
-        // Attach WebSocket to SEPARATE server
-        initializeWebSocket(wsHttpServer);
-
-        // Start WebSocket on its own port
-        wsHttpServer.listen(WS_PORT, "0.0.0.0", () => {
-            console.log(`✓ WebSocket Server listening on port ${WS_PORT}`);
-        });
-
-        // Main server on Passenger socket (Express only)
+        // ONE listen() call - handles both HTTP and WebSocket
         server.listen(socketPath, () => {
-            console.log("✓ HTTP Server ready on Passenger socket");
+            console.log("✓ Server ready - HTTP and WebSocket on same socket");
         });
 
         server.on("error", (err) => {
-            console.error("HTTP Server error:", err.code, err.message);
+            console.error("Server error:", err.code, err.message);
 
             if (err.code === "EADDRINUSE") {
                 try {
                     fs.unlinkSync(socketPath);
                     server.listen(socketPath, () => {
-                        console.log("✓ HTTP Server ready after socket cleanup");
+                        console.log("✓ Server ready after socket cleanup");
                     });
                 } catch (e) {
                     console.error("Could not clean socket:", e.message);
@@ -262,26 +256,19 @@ if (process.env.PASSENGER_APP_ENV) {
             }
         });
 
-        wsHttpServer.on("error", (err) => {
-            console.error("WebSocket Server error:", err.code, err.message);
-        });
-
     } else {
-        console.log("No PASSENGER_SPAWN_WORK_DIR - using app export");
-        initializeWebSocket(wsHttpServer);
-        wsHttpServer.listen(WS_PORT, "0.0.0.0", () => {
-            console.log(`✓ WebSocket Server on port ${WS_PORT}`);
-        });
-        module.exports = app;
+        // No spawn work dir - export for Passenger auto mode
+        console.log("No PASSENGER_SPAWN_WORK_DIR - using Passenger auto mode");
+        // Passenger will call listen() itself on this server
+        // WebSocket is already attached above
+        module.exports = server;
     }
 
 } else {
     // ----------------------------------------
-    // Local Development - single server
+    // Local Development
     // ----------------------------------------
     const PORT = process.env.PORT || 3000;
-
-    initializeWebSocket(server);
 
     server.listen(PORT, () => {
         console.log(`✓ Server Started on port ${PORT}`);
