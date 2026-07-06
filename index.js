@@ -381,30 +381,12 @@ app.use((err, req, res, next) => {
 const server = http.createServer(app);
 
 // ============================================
-// PASSENGER FEEDBACK - Tell Passenger we are ready
-// ============================================
-function notifyPassengerReady() {
-    // PASSENGER_USE_FEEDBACK_FD is the file descriptor
-    // Passenger listens on this to know app is ready
-    const feedbackFd = process.env.PASSENGER_USE_FEEDBACK_FD;
-    
-    if (feedbackFd) {
-        try {
-            // Write a single byte "!" to tell Passenger we are ready
-            const fd = parseInt(feedbackFd);
-            const buf = Buffer.from("!");
-            fs.writeSync(fd, buf, 0, buf.length);
-            console.log("✓ Passenger notified - app is ready");
-        } catch (e) {
-            console.log("Could not notify Passenger:", e.message);
-        }
-    }
-}
-
-// ============================================
 // START SERVER
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
+    // ----------------------------------------
+    // Passenger Environment (A2 Hosting)
+    // ----------------------------------------
     console.log("Running under Passenger");
 
     const spawnWorkDir = process.env.PASSENGER_SPAWN_WORK_DIR;
@@ -412,7 +394,6 @@ if (process.env.PASSENGER_APP_ENV) {
     if (spawnWorkDir) {
         const socketPath = path.join(spawnWorkDir, "stdin.socket");
 
-        console.log("Spawn Work Dir:", spawnWorkDir);
         console.log("Socket Path:", socketPath);
 
         // Attach WebSocket BEFORE listen
@@ -420,37 +401,33 @@ if (process.env.PASSENGER_APP_ENV) {
 
         // Listen on Unix socket
         server.listen(socketPath, () => {
-            console.log(`✓ Server listening on socket`);
-            
-            // Notify Passenger the app is ready to receive requests
-            notifyPassengerReady();
+            console.log("✓ Server ready and listening");
         });
 
         // Handle server errors
         server.on("error", (err) => {
-            console.error("Server error:", err.message);
-            console.error("Error code:", err.code);
+            console.error("Server error:", err.code, err.message);
 
+            // Socket already in use - remove and retry
             if (err.code === "EADDRINUSE") {
                 console.log("Socket in use, removing and retrying...");
                 try {
                     fs.unlinkSync(socketPath);
-                    server.listen(socketPath);
+                    server.listen(socketPath, () => {
+                        console.log("✓ Server ready after socket cleanup");
+                    });
                 } catch (unlinkErr) {
                     console.error("Could not remove socket:", unlinkErr.message);
                 }
             }
 
+            // Directory not found - try to create it
             if (err.code === "ENOENT") {
-                console.log("Socket directory not found");
-                console.log("Spawn work dir:", spawnWorkDir);
-                console.log("Trying to create directory...");
+                console.log("Socket directory not found, creating...");
                 try {
                     fs.mkdirSync(spawnWorkDir, { recursive: true });
-                    console.log("Directory created, retrying listen...");
                     server.listen(socketPath, () => {
-                        console.log("✓ Server listening on socket after mkdir");
-                        notifyPassengerReady();
+                        console.log("✓ Server ready after mkdir");
                     });
                 } catch (mkdirErr) {
                     console.error("Could not create directory:", mkdirErr.message);
@@ -459,7 +436,8 @@ if (process.env.PASSENGER_APP_ENV) {
         });
 
     } else {
-        console.log("No PASSENGER_SPAWN_WORK_DIR - exporting app");
+        // Fallback if no spawn work dir
+        console.log("No PASSENGER_SPAWN_WORK_DIR found - using app export");
         initializeWebSocket(server);
         module.exports = app;
     }
@@ -474,8 +452,8 @@ if (process.env.PASSENGER_APP_ENV) {
 
     server.listen(PORT, () => {
         console.log(`✓ Server Started on port ${PORT}`);
-        console.log(`HTTP:      http://localhost:${PORT}`);
-        console.log(`WebSocket: ws://localhost:${PORT}/ws`);
+        console.log(`   HTTP:      http://localhost:${PORT}`);
+        console.log(`   WebSocket: ws://localhost:${PORT}/ws`);
     });
 
     module.exports = server;
