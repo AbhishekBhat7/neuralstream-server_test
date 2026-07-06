@@ -184,6 +184,132 @@
 
 
 
+// require("dotenv").config();
+
+// const express = require("express");
+// const http = require("http");
+
+// const authRoutes = require("./src/mobile/routes/authRoute");
+// const sessionRoutes = require("./src/mobile/routes/sessionRoute");
+// const initializeWebSocket = require("./src/mobile/websocket/websocket");
+
+// const app = express();
+
+// // ============================================
+// // MIDDLEWARE
+// // ============================================
+// app.use(express.json());
+
+// // ============================================
+// // ROUTES
+// // ============================================
+// app.use("/api", authRoutes);
+// app.use("/api", sessionRoutes);
+
+// app.get("/", (req, res) => {
+//     res.send("Welcome to the NeuralStream API");
+// });
+
+// app.get("/test", (req, res) => {
+//     res.json({
+//         status: "ok",
+//         db_host: process.env.DB_HOST,
+//         db_user: process.env.DB_USER,
+//         node_env: process.env.NODE_ENV,
+//         passenger: process.env.PASSENGER_APP_ENV || "not set",
+//         timestamp: new Date().toISOString()
+//     });
+// });
+
+// // ============================================
+// // 404 Handler
+// // ============================================
+// app.use((req, res, next) => {
+//     res.status(404).json({
+//         error: "Route not found",
+//         path: req.path,
+//         method: req.method
+//     });
+// });
+
+// // ============================================
+// // Global Error Handler
+// // ============================================
+// app.use((err, req, res, next) => {
+//     console.error("=== SERVER ERROR ===");
+//     console.error("Path:", req.path);
+//     console.error("Error:", err.message);
+//     console.error("Stack:", err.stack);
+//     console.error("===================");
+
+//     res.status(500).json({
+//         error: err.message,
+//         path: req.path
+//     });
+// });
+
+// // ============================================
+// // CREATE HTTP SERVER
+// // ============================================
+// const server = http.createServer(app);
+
+// // ============================================
+// // START SERVER
+// // ============================================
+// if (process.env.PASSENGER_APP_ENV) {
+//     // ----------------------------------------
+//     // Passenger Environment
+//     // ----------------------------------------
+//     console.log("Running under Passenger");
+
+//     // Passenger needs a PORT to attach to
+//     // It provides this via the PORT environment variable
+//     const PORT = process.env.PORT;
+
+//     if (PORT) {
+//         console.log("Passenger provided PORT:", PORT);
+
+//         // Attach WebSocket BEFORE listen
+//         initializeWebSocket(server);
+
+//         server.listen(PORT, '127.0.0.1', () => {
+//             console.log(`Server listening on 127.0.0.1:${PORT}`);
+//         });
+
+//     } else {
+//         // Passenger older versions use a socket file
+//         // Try to get it from environment
+//         console.log("No PORT found, checking for socket...");
+//         console.log("All ENV keys:", Object.keys(process.env).join(', '));
+
+//         // Attach WebSocket
+//         initializeWebSocket(server);
+
+//         // Export app as fallback
+//         // Passenger will call listen() itself
+//         module.exports = app;
+//     }
+
+// } else {
+//     // ----------------------------------------
+//     // Local Development
+//     // ----------------------------------------
+//     const PORT = process.env.PORT || 3000;
+
+//     initializeWebSocket(server);
+
+//     server.listen(PORT, () => {
+//         console.log(`Server Started on port ${PORT}`);
+//         console.log(`HTTP: http://localhost:${PORT}`);
+//         console.log(`WebSocket: ws://localhost:${PORT}/ws`);
+//     });
+
+//     module.exports = server;
+// }
+
+
+
+
 require("dotenv").config();
 
 const express = require("express");
@@ -214,9 +340,9 @@ app.get("/test", (req, res) => {
     res.json({
         status: "ok",
         db_host: process.env.DB_HOST,
-        db_user: process.env.DB_USER,
         node_env: process.env.NODE_ENV,
         passenger: process.env.PASSENGER_APP_ENV || "not set",
+        spawn_dir: process.env.PASSENGER_SPAWN_WORK_DIR || "not set",
         timestamp: new Date().toISOString()
     });
 });
@@ -257,36 +383,42 @@ const server = http.createServer(app);
 // START SERVER
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
-    // ----------------------------------------
-    // Passenger Environment
-    // ----------------------------------------
     console.log("Running under Passenger");
 
-    // Passenger needs a PORT to attach to
-    // It provides this via the PORT environment variable
-    const PORT = process.env.PORT;
+    const spawnWorkDir = process.env.PASSENGER_SPAWN_WORK_DIR;
 
-    if (PORT) {
-        console.log("Passenger provided PORT:", PORT);
+    if (spawnWorkDir) {
+        const path = require("path");
+        const fs = require("fs");
+
+        // Passenger socket file is always at this location
+        const socketPath = path.join(spawnWorkDir, "stdin.socket");
+
+        console.log("Spawn Work Dir:", spawnWorkDir);
+        console.log("Socket Path:", socketPath);
 
         // Attach WebSocket BEFORE listen
         initializeWebSocket(server);
 
-        server.listen(PORT, '127.0.0.1', () => {
-            console.log(`Server listening on 127.0.0.1:${PORT}`);
+        // Listen on the Unix socket file
+        server.listen(socketPath, () => {
+            console.log(`Server listening on socket: ${socketPath}`);
+
+            // CRITICAL: Passenger needs socket to be world-readable
+            try {
+                fs.chmodSync(socketPath, "777");
+                console.log("Socket permissions set to 777");
+            } catch (e) {
+                console.log("Could not chmod socket:", e.message);
+            }
         });
 
     } else {
-        // Passenger older versions use a socket file
-        // Try to get it from environment
-        console.log("No PORT found, checking for socket...");
-        console.log("All ENV keys:", Object.keys(process.env).join(', '));
+        console.log("PASSENGER_SPAWN_WORK_DIR not found!");
+        console.log("Falling back to exporting app...");
 
-        // Attach WebSocket
+        // Last resort fallback
         initializeWebSocket(server);
-
-        // Export app as fallback
-        // Passenger will call listen() itself
         module.exports = app;
     }
 
