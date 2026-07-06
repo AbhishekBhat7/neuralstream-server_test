@@ -216,12 +216,13 @@ app.get("/test", (req, res) => {
         db_host: process.env.DB_HOST,
         db_user: process.env.DB_USER,
         node_env: process.env.NODE_ENV,
-        passenger: process.env.PASSENGER_APP_ENV || "not set"
+        passenger: process.env.PASSENGER_APP_ENV || "not set",
+        timestamp: new Date().toISOString()
     });
 });
 
 // ============================================
-// 404 Handler (MUST be before error handler)
+// 404 Handler
 // ============================================
 app.use((req, res, next) => {
     res.status(404).json({
@@ -248,41 +249,59 @@ app.use((err, req, res, next) => {
 });
 
 // ============================================
-// CREATE SERVER
+// CREATE HTTP SERVER
 // ============================================
 const server = http.createServer(app);
-
-// Attach WebSocket to same server
-initializeWebSocket(server);
 
 // ============================================
 // START SERVER
 // ============================================
 if (process.env.PASSENGER_APP_ENV) {
     // ----------------------------------------
-    // A2 Hosting / Passenger Environment
-    // Passenger manages the port/listen call
-    // We MUST export the server or app
+    // Passenger Environment
     // ----------------------------------------
     console.log("Running under Passenger");
-    console.log("DB Host:", process.env.DB_HOST);
-    console.log("DB User:", process.env.DB_USER);
-    
-    // Passenger needs this - export the http.Server object
-    module.exports = server;
+
+    // Passenger needs a PORT to attach to
+    // It provides this via the PORT environment variable
+    const PORT = process.env.PORT;
+
+    if (PORT) {
+        console.log("Passenger provided PORT:", PORT);
+
+        // Attach WebSocket BEFORE listen
+        initializeWebSocket(server);
+
+        server.listen(PORT, '127.0.0.1', () => {
+            console.log(`Server listening on 127.0.0.1:${PORT}`);
+        });
+
+    } else {
+        // Passenger older versions use a socket file
+        // Try to get it from environment
+        console.log("No PORT found, checking for socket...");
+        console.log("All ENV keys:", Object.keys(process.env).join(', '));
+
+        // Attach WebSocket
+        initializeWebSocket(server);
+
+        // Export app as fallback
+        // Passenger will call listen() itself
+        module.exports = app;
+    }
 
 } else {
     // ----------------------------------------
     // Local Development
     // ----------------------------------------
     const PORT = process.env.PORT || 3000;
-    
+
+    initializeWebSocket(server);
+
     server.listen(PORT, () => {
         console.log(`Server Started on port ${PORT}`);
         console.log(`HTTP: http://localhost:${PORT}`);
         console.log(`WebSocket: ws://localhost:${PORT}/ws`);
-        console.log("DB Host:", process.env.DB_HOST);
-        console.log("DB User:", process.env.DB_USER);
     });
 
     module.exports = server;
