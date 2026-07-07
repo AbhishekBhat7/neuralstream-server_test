@@ -154,10 +154,14 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const { injectSpeedInsights } = require("@vercel/speed-insights");
 
 const authRoutes = require("./src/mobile/routes/authRoute");
 const sessionRoutes = require("./src/mobile/routes/sessionRoute");
 const initializeWebSocket = require("./src/mobile/websocket/websocket");
+
+// Initialize Vercel Speed Insights
+injectSpeedInsights();
 
 const app = express();
 
